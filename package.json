@@ -1,7 +1,16 @@
 {
   "name": "breakout-game",
+  "description": "An Ionic project",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "android": "cd android && ./gradlew app:assembleSignedRelease && cd ..",
+		"bundle": "cd android && ./gradlew app:bundleSignedRelease && cd ..",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@capacitor/android": "^3.0.1",
     "@capacitor/core": "3.0.1",
@@ -17,6 +26,7 @@
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
     "ionicons": "^5.4.0",
+    "lightweight-charts": "^3.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router": "^5.2.0",
@@ -37,12 +47,6 @@
     "workbox-strategies": "^5.1.4",
     "workbox-streams": "^5.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -61,7 +65,6 @@
       "last 1 safari version"
     ]
   },
-  "description": "An Ionic project",
   "devDependencies": {
     "@capacitor/cli": "3.0.1"
   },
