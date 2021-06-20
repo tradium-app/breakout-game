@@ -6,8 +6,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "android": "cd android && ./gradlew app:assembleSignedRelease && cd ..",
-		"bundle": "cd android && ./gradlew app:bundleSignedRelease && cd ..",
+    "android": "npx cap run android",
+    "android:build": "cd android && ./gradlew app:assembleSignedRelease && cd ..",
+    "bundle": "cd android && ./gradlew app:bundleSignedRelease && cd ..",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
