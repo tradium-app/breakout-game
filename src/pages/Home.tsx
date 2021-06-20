@@ -13,9 +13,9 @@ const Home: React.FC = () => {
   const containerId = "test-containerId";
 
   useEffect(() => {
-    var chart = createChart(document.body, {
-      width: 600,
-      height: 300,
+    const chart = createChart(containerId, {
+      width: window.innerWidth,
+      height: window.innerHeight,
       layout: {
         backgroundColor: "#000000",
         textColor: "rgba(255, 255, 255, 0.9)",
@@ -47,6 +47,8 @@ const Home: React.FC = () => {
       wickDownColor: "rgba(255, 144, 0, 1)",
       wickUpColor: "rgba(255, 144, 0, 1)",
     });
+
+    chart.timeScale().fitContent();
 
     candleSeries.setData([
       {
@@ -1097,11 +1099,6 @@ const Home: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen>
         <div id={containerId} slot="fixed"></div>
       </IonContent>

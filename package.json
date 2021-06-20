@@ -6,8 +6,8 @@
   "scripts": {
     "web:start": "react-scripts start",
     "web:build": "react-scripts build",
-    "android:build": "ionic cap build android --no-open",
-    "android:install": "cd android && ./gradlew app:installUnsignedDebug && cd ..",
+    "android:build": "ionic cap copy android && cd android && ./gradlew app:assembleSignedRelease && cd ..",
+    "android:install": "cd android && ./gradlew app:installSignedRelease && cd ..",
     "android:bundle": "cd android && ./gradlew app:bundleSignedRelease && cd ..",
     "android:clean": "cd android && ./gradlew app:clean && cd ..",
     "test": "react-scripts test",
