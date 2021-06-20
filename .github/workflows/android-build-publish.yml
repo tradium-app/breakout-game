@@ -25,7 +25,7 @@ jobs:
           sh prepare_qa.sh
           npm ci
           npm run build
-          npm run android
+          npm run android:build
           npm run bundle
 
       - name: Upload APK artifact
