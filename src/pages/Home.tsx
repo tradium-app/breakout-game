@@ -1,13 +1,23 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonTitle,
-  IonToolbar,
+  IonButton,
+  IonRow,
+  IonCol,
+  IonFab,
+  IonFabList,
+  IonFabButton,
+  IonIcon,
 } from "@ionic/react";
 import "./Home.css";
 import { createChart, CrosshairMode } from "lightweight-charts";
 import { useEffect } from "react";
+import {
+  arrowDownOutline,
+  arrowDownSharp,
+  arrowForwardOutline,
+  arrowUpOutline,
+} from "ionicons/icons";
 
 const Home: React.FC = () => {
   const containerId = "test-containerId";
@@ -1101,6 +1111,40 @@ const Home: React.FC = () => {
     <IonPage>
       <IonContent fullscreen>
         <div id={containerId} slot="fixed"></div>
+        <IonFab vertical="bottom" horizontal="start" slot="fixed">
+          <IonRow>
+            <IonCol>
+              <IonFabButton>
+                <IonIcon
+                  icon={arrowUpOutline}
+                  onClick={() => {
+                    alert("going up?");
+                  }}
+                />
+              </IonFabButton>
+            </IonCol>
+            <IonCol>
+              <IonFabButton>
+                <IonIcon
+                  icon={arrowDownOutline}
+                  onClick={() => {
+                    alert("going down?");
+                  }}
+                />
+              </IonFabButton>
+            </IonCol>
+            <IonCol>
+              <IonFabButton>
+                <IonIcon
+                  icon={arrowForwardOutline}
+                  onClick={() => {
+                    alert("going sideways?");
+                  }}
+                />
+              </IonFabButton>
+            </IonCol>
+          </IonRow>
+        </IonFab>
       </IonContent>
     </IonPage>
   );
