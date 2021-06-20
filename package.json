@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "android": "npx cap run android",
+    "android": "cd android && ./gradlew app:installUnsignedDebug && cd ..",
     "android:build": "cd android && ./gradlew app:assembleSignedRelease && cd ..",
     "android:bundle": "cd android && ./gradlew app:bundleSignedRelease && cd ..",
     "android:clean": "cd android && ./gradlew app:clean && cd ..",
