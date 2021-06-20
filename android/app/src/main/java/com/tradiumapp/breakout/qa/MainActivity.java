@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.tradiumapp.breakout.qa;
 
 import com.getcapacitor.BridgeActivity;
 
