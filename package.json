@@ -15,7 +15,11 @@
   },
   "dependencies": {
     "@capacitor/android": "^3.0.1",
+    "@capacitor/app": "1.0.1",
     "@capacitor/core": "3.0.1",
+    "@capacitor/haptics": "1.0.1",
+    "@capacitor/keyboard": "1.0.1",
+    "@capacitor/status-bar": "1.0.1",
     "@ionic/react": "^5.5.0",
     "@ionic/react-router": "^5.5.0",
     "@testing-library/jest-dom": "^5.11.9",
@@ -49,6 +53,10 @@
     "workbox-strategies": "^5.1.4",
     "workbox-streams": "^5.1.4"
   },
+  "devDependencies": {
+    "@capacitor/cli": "3.0.1",
+    "@ionic/cli": "^6.16.3"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -66,9 +74,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@capacitor/cli": "3.0.1"
   },
   "engines": {
     "node": ">=v15.8.0"

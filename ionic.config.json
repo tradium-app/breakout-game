@@ -1,6 +1,8 @@
 {
   "name": "breakout-game",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react",
   "proxies": [
     {
