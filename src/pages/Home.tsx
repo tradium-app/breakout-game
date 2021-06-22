@@ -1,20 +1,18 @@
+import { useEffect } from "react";
 import {
   IonContent,
   IonPage,
-  IonButton,
   IonRow,
   IonCol,
   IonFab,
-  IonFabList,
   IonFabButton,
   IonIcon,
+  IonAlert,
 } from "@ionic/react";
 import "./Home.css";
 import { createChart, CrosshairMode } from "lightweight-charts";
-import { useEffect } from "react";
 import {
   arrowDownOutline,
-  arrowDownSharp,
   arrowForwardOutline,
   arrowUpOutline,
 } from "ionicons/icons";
@@ -1111,6 +1109,22 @@ const Home: React.FC = () => {
     <IonPage>
       <IonContent fullscreen>
         <div id={containerId} slot="fixed"></div>
+
+        <IonAlert
+          header="Start Game"
+          message="Predict if the stock will go up or down 10%."
+          isOpen
+          buttons={[{ text: "Start", handler: (d) => console.log("starting") }]}
+        />
+
+        <IonFab vertical="top" horizontal="end" slot="fixed">
+          <IonFabButton color="danger">
+            12
+            <br />
+            Score
+          </IonFabButton>
+        </IonFab>
+
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
           <IonRow>
             <IonCol>
