@@ -68,24 +68,17 @@ const Home: React.FC = () => {
     containerId.current.timeScale().fitContent();
   }
 
-  const predictUp = () => {
-    const willPriceIncrease = data.getNewGame.willPriceIncrease;
-
-    if (willPriceIncrease) {
-      present({ message: "Bravo!!", position: "top", duration: 300 });
-      setScore(score + 1);
-    } else {
-      present({ message: "Oops!", position: "top", duration: 300 });
-      setScore(score - 1);
+  const predict = (prediction, actual) => {
+    if (predicted) {
+      present({
+        message: "Yo! Press Next button",
+        position: "top",
+        duration: 300,
+      });
+      return;
     }
 
-    setPredicted(true);
-  };
-
-  const predictDown = () => {
-    const willPriceDecrease = data.getNewGame.willPriceDecrease;
-
-    if (willPriceDecrease) {
+    if (prediction === actual) {
       present({ message: "Bravo!!", position: "top", duration: 300 });
       setScore(score + 1);
     } else {
@@ -124,12 +117,20 @@ const Home: React.FC = () => {
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
           <IonRow>
             <IonCol>
-              <IonFabButton onClick={predictUp}>
+              <IonFabButton
+                onClick={() =>
+                  predict(true, data?.getNewGame?.willPriceIncrease)
+                }
+              >
                 <IonIcon icon={arrowUpOutline} />
               </IonFabButton>
             </IonCol>
             <IonCol>
-              <IonFabButton onClick={predictDown}>
+              <IonFabButton
+                onClick={() =>
+                  predict(true, data?.getNewGame?.willPriceDecrease)
+                }
+              >
                 <IonIcon icon={arrowDownOutline} />
               </IonFabButton>
             </IonCol>
