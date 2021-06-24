@@ -28,6 +28,7 @@ const Home: React.FC = () => {
     fetchPolicy: "no-cache",
   });
   const [candleSeries, setCandleSeries] = useState(null);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     containerId.current = createChart(containerId.current, {
@@ -68,8 +69,10 @@ const Home: React.FC = () => {
 
     if (willPriceIncrease) {
       present("you fking right", 3000);
+      setScore(score + 1);
     } else {
       present("you fking wrong", 3000);
+      setScore(score - 1);
     }
 
     candleSeries.setData(chartData);
@@ -80,8 +83,10 @@ const Home: React.FC = () => {
 
     if (willPriceDecrease) {
       present("you fking right", 3000);
+      setScore(score + 1);
     } else {
       present("you fking wrong", 3000);
+      setScore(score - 1);
     }
 
     candleSeries.setData(chartData);
@@ -105,7 +110,7 @@ const Home: React.FC = () => {
 
         <IonFab vertical="top" horizontal="end" slot="fixed">
           <IonFabButton color="danger">
-            12
+            {score}
             <br />
             {"Score"}
           </IonFabButton>
