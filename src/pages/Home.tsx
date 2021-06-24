@@ -35,9 +35,6 @@ const Home: React.FC = () => {
     containerId.current = createChart(containerId.current, {
       width: window.innerWidth,
       height: window.innerHeight,
-      rightPriceScale: {
-        visible: false,
-      },
     });
     setCandleSeries(containerId.current.addCandlestickSeries({}));
   }, []);
@@ -63,6 +60,15 @@ const Home: React.FC = () => {
     if (predicted) {
       candleSeries.setData(chartData);
     } else {
+      console.log('printing visible');
+      containerId.current.applyOptions({
+        watermark: {
+          visible: false,
+        },
+        rightPriceScale: {
+          visible: false,
+        },
+      });
       candleSeries.setData(
         chartData.slice(0, data.getNewGame.price_history.length),
       );
@@ -89,6 +95,19 @@ const Home: React.FC = () => {
       setScore(score - 1);
     }
 
+    containerId.current.applyOptions({
+      watermark: {
+        color: 'rgba(11, 94, 29, 0.4)',
+        visible: true,
+        text: data.getNewGame.symbol,
+        fontSize: 16,
+        horzAlign: 'left',
+        vertAlign: 'top',
+      },
+      rightPriceScale: {
+        visible: true,
+      },
+    });
     setPredicted(true);
   };
 
