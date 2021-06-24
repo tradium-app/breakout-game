@@ -72,10 +72,10 @@ const Home: React.FC = () => {
     const willPriceIncrease = data.getNewGame.willPriceIncrease;
 
     if (willPriceIncrease) {
-      present("you fking right", 3000);
+      present({ message: "Bravo!!", position: "top", duration: 300 });
       setScore(score + 1);
     } else {
-      present("you fking wrong", 3000);
+      present({ message: "Oops!", position: "top", duration: 300 });
       setScore(score - 1);
     }
 
@@ -86,10 +86,10 @@ const Home: React.FC = () => {
     const willPriceDecrease = data.getNewGame.willPriceDecrease;
 
     if (willPriceDecrease) {
-      present("you fking right", 3000);
+      present({ message: "Bravo!!", position: "top", duration: 300 });
       setScore(score + 1);
     } else {
-      present("you fking wrong", 3000);
+      present({ message: "Oops!", position: "top", duration: 300 });
       setScore(score - 1);
     }
 
