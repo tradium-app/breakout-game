@@ -37,6 +37,8 @@ const Home: React.FC = () => {
 
   if (!loading && !error) {
     const candleSeries = containerId.current.addCandlestickSeries({});
+    console.log("containerId.current", containerId.current);
+
     let chartData = [...data.getNewGame.price_history];
     chartData = chartData
       .sort((a, b) => (a.timeStamp > b.timeStamp ? 1 : -1))
@@ -50,6 +52,7 @@ const Home: React.FC = () => {
         };
       });
 
+    console.log("candleSeries", candleSeries.data);
     chartData && candleSeries.setData(chartData);
     containerId.current.timeScale().fitContent();
   }

@@ -30,7 +30,7 @@
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
     "apollo-link-debounce": "^3.0.0",
-    "graphql-tag": "^2.12.4",
+    "graphql": "^15.5.1",
     "ionicons": "^5.4.0",
     "lightweight-charts": "^3.3.0",
     "moment": "^2.29.1",
