@@ -6,6 +6,7 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import DebounceLink from "apollo-link-debounce";
+
 dotenv.config();
 
 const DEFAULT_DEBOUNCE_TIMEOUT = 500;

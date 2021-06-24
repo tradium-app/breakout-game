@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/client";
+import { useEffect, useRef, useState } from 'react';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/client';
+import { createChart } from 'lightweight-charts';
 import {
   IonContent,
   IonPage,
@@ -11,21 +12,20 @@ import {
   IonIcon,
   IonAlert,
   useIonToast,
-} from "@ionic/react";
-import "./Home.css";
-import { createChart } from "lightweight-charts";
+} from '@ionic/react';
+import './Home.css';
 import {
   arrowDownOutline,
   arrowForwardOutline,
   arrowUpOutline,
-} from "ionicons/icons";
-import moment from "moment";
+} from 'ionicons/icons';
+import moment from 'moment';
 
 const Home: React.FC = () => {
   const [present] = useIonToast();
   const containerId = useRef(null);
   const { loading, error, data, refetch } = useQuery(GET_NEW_GAME_QUERY, {
-    fetchPolicy: "no-cache",
+    fetchPolicy: 'no-cache',
   });
   const [candleSeries, setCandleSeries] = useState(null);
   const [score, setScore] = useState(0);
@@ -35,6 +35,9 @@ const Home: React.FC = () => {
     containerId.current = createChart(containerId.current, {
       width: window.innerWidth,
       height: window.innerHeight,
+      rightPriceScale: {
+        visible: false,
+      },
     });
     setCandleSeries(containerId.current.addCandlestickSeries({}));
   }, []);
@@ -47,13 +50,13 @@ const Home: React.FC = () => {
 
     chartData = chartData
       .sort((a, b) => (a.timeStamp > b.timeStamp ? 1 : -1))
-      .map((price) => {
+      .map(price => {
         return {
           open: price.open,
           close: price.close,
           low: price.low,
           high: price.high,
-          time: moment.unix(price.timeStamp / 1000).format("YYYY-MM-DD"),
+          time: moment.unix(price.timeStamp / 1000).format('YYYY-MM-DD'),
         };
       });
 
@@ -61,7 +64,7 @@ const Home: React.FC = () => {
       candleSeries.setData(chartData);
     } else {
       candleSeries.setData(
-        chartData.slice(0, data.getNewGame.price_history.length)
+        chartData.slice(0, data.getNewGame.price_history.length),
       );
     }
 
@@ -71,18 +74,18 @@ const Home: React.FC = () => {
   const predict = (prediction, actual) => {
     if (predicted) {
       present({
-        message: "Yo! Press Next button",
-        position: "top",
+        message: 'Yo! Press Next button',
+        position: 'top',
         duration: 300,
       });
       return;
     }
 
     if (prediction === actual) {
-      present({ message: "Bravo!!", position: "top", duration: 300 });
+      present({ message: 'Bravo!!', position: 'top', duration: 300 });
       setScore(score + 1);
     } else {
-      present({ message: "Oops!", position: "top", duration: 300 });
+      present({ message: 'Oops!', position: 'top', duration: 300 });
       setScore(score - 1);
     }
 
@@ -103,14 +106,14 @@ const Home: React.FC = () => {
           header="Start Game"
           message="Predict if the stock will go up or down 10%."
           isOpen
-          buttons={[{ text: "Start", handler: (d) => console.log("starting") }]}
+          buttons={[{ text: 'Start', handler: d => console.log('starting') }]}
         />
 
         <IonFab vertical="top" horizontal="end" slot="fixed">
           <IonFabButton color="danger">
             {score}
             <br />
-            {"Score"}
+            {'Score'}
           </IonFabButton>
         </IonFab>
 
@@ -139,7 +142,7 @@ const Home: React.FC = () => {
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={nextGame}>
-            {"Next"}
+            {'Next'}
             <IonIcon icon={arrowForwardOutline} />
           </IonFabButton>
         </IonFab>
