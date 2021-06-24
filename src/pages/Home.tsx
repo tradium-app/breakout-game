@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/client";
 import {
@@ -22,24 +22,29 @@ import {
 import moment from "moment";
 
 const Home: React.FC = () => {
+  const [present] = useIonToast();
   const containerId = useRef(null);
   const { loading, error, data, refetch } = useQuery(GET_NEW_GAME_QUERY, {
     fetchPolicy: "no-cache",
   });
-  const [present] = useIonToast();
+  const [candleSeries, setCandleSeries] = useState(null);
 
   useEffect(() => {
     containerId.current = createChart(containerId.current, {
       width: window.innerWidth,
       height: window.innerHeight,
     });
+    setCandleSeries(containerId.current.addCandlestickSeries({}));
   }, []);
 
-  if (!loading && !error) {
-    const candleSeries = containerId.current.addCandlestickSeries({});
-    console.log("containerId.current", containerId.current);
+  let chartData = [];
 
-    let chartData = [...data.getNewGame.price_history];
+  if (!loading && !error) {
+    chartData = [
+      ...data.getNewGame.price_history,
+      ...data.getNewGame.future_price_history,
+    ];
+
     chartData = chartData
       .sort((a, b) => (a.timeStamp > b.timeStamp ? 1 : -1))
       .map((price) => {
@@ -52,8 +57,9 @@ const Home: React.FC = () => {
         };
       });
 
-    console.log("candleSeries", candleSeries.data);
-    chartData && candleSeries.setData(chartData);
+    candleSeries.setData(
+      chartData.slice(0, data.getNewGame.price_history.length)
+    );
     containerId.current.timeScale().fitContent();
   }
 
@@ -66,7 +72,7 @@ const Home: React.FC = () => {
       present("you fking wrong", 3000);
     }
 
-    refetch();
+    candleSeries.setData(chartData);
   };
 
   const predictDown = () => {
@@ -78,6 +84,10 @@ const Home: React.FC = () => {
       present("you fking wrong", 3000);
     }
 
+    candleSeries.setData(chartData);
+  };
+
+  const nextGame = () => {
     refetch();
   };
 
@@ -97,7 +107,7 @@ const Home: React.FC = () => {
           <IonFabButton color="danger">
             12
             <br />
-            Score
+            {"Score"}
           </IonFabButton>
         </IonFab>
 
@@ -113,17 +123,14 @@ const Home: React.FC = () => {
                 <IonIcon icon={arrowDownOutline} onClick={predictDown} />
               </IonFabButton>
             </IonCol>
-            <IonCol>
-              <IonFabButton>
-                <IonIcon
-                  icon={arrowForwardOutline}
-                  onClick={() => {
-                    alert("going sideways?");
-                  }}
-                />
-              </IonFabButton>
-            </IonCol>
           </IonRow>
+        </IonFab>
+
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton>
+            {"Next"}
+            <IonIcon icon={arrowForwardOutline} onClick={nextGame} />
+          </IonFabButton>
         </IonFab>
       </IonContent>
     </IonPage>
