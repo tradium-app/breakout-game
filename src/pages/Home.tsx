@@ -114,22 +114,22 @@ const Home: React.FC = () => {
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
           <IonRow>
             <IonCol>
-              <IonFabButton>
-                <IonIcon icon={arrowUpOutline} onClick={predictUp} />
+              <IonFabButton onClick={predictUp}>
+                <IonIcon icon={arrowUpOutline} />
               </IonFabButton>
             </IonCol>
             <IonCol>
-              <IonFabButton>
-                <IonIcon icon={arrowDownOutline} onClick={predictDown} />
+              <IonFabButton onClick={predictDown}>
+                <IonIcon icon={arrowDownOutline} />
               </IonFabButton>
             </IonCol>
           </IonRow>
         </IonFab>
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton>
+          <IonFabButton onClick={nextGame}>
             {"Next"}
-            <IonIcon icon={arrowForwardOutline} onClick={nextGame} />
+            <IonIcon icon={arrowForwardOutline} />
           </IonFabButton>
         </IonFab>
       </IonContent>
