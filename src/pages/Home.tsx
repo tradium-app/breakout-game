@@ -29,6 +29,7 @@ const Home: React.FC = () => {
   });
   const [candleSeries, setCandleSeries] = useState(null);
   const [score, setScore] = useState(0);
+  const [predicted, setPredicted] = useState(false);
 
   useEffect(() => {
     containerId.current = createChart(containerId.current, {
@@ -38,10 +39,8 @@ const Home: React.FC = () => {
     setCandleSeries(containerId.current.addCandlestickSeries({}));
   }, []);
 
-  let chartData = [];
-
   if (!loading && !error) {
-    chartData = [
+    let chartData = [
       ...data.getNewGame.price_history,
       ...data.getNewGame.future_price_history,
     ];
@@ -58,9 +57,14 @@ const Home: React.FC = () => {
         };
       });
 
-    candleSeries.setData(
-      chartData.slice(0, data.getNewGame.price_history.length)
-    );
+    if (predicted) {
+      candleSeries.setData(chartData);
+    } else {
+      candleSeries.setData(
+        chartData.slice(0, data.getNewGame.price_history.length)
+      );
+    }
+
     containerId.current.timeScale().fitContent();
   }
 
@@ -75,7 +79,7 @@ const Home: React.FC = () => {
       setScore(score - 1);
     }
 
-    candleSeries.setData(chartData);
+    setPredicted(true);
   };
 
   const predictDown = () => {
@@ -89,11 +93,12 @@ const Home: React.FC = () => {
       setScore(score - 1);
     }
 
-    candleSeries.setData(chartData);
+    setPredicted(true);
   };
 
   const nextGame = () => {
     refetch();
+    setPredicted(false);
   };
 
   return (
