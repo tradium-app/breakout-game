@@ -39,7 +39,7 @@ const Home: React.FC = () => {
     setCandleSeries(containerId.current.addCandlestickSeries({}));
   }, []);
 
-  if (!loading && !error) {
+  if (!loading && !error && data) {
     let chartData = [
       ...data.getNewGame.price_history,
       ...data.getNewGame.future_price_history,
@@ -60,7 +60,6 @@ const Home: React.FC = () => {
     if (predicted) {
       candleSeries.setData(chartData);
     } else {
-      console.log('printing visible');
       containerId.current.applyOptions({
         watermark: {
           visible: false,
@@ -97,7 +96,7 @@ const Home: React.FC = () => {
 
     containerId.current.applyOptions({
       watermark: {
-        color: 'rgba(11, 94, 29, 0.4)',
+        color: 'red',
         visible: true,
         text: data.getNewGame.symbol,
         fontSize: 16,
@@ -123,7 +122,7 @@ const Home: React.FC = () => {
 
         <IonAlert
           header="Start Game"
-          message="Predict if the stock will go up or down 10%."
+          message="Predict if the stock will go up or down 5%."
           isOpen
           buttons={[{ text: 'Start', handler: d => console.log('starting') }]}
         />
