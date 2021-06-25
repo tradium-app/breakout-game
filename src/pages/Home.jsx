@@ -11,19 +11,17 @@ import {
   IonFabButton,
   IonIcon,
   IonAlert,
+  useIonAlert,
   useIonToast,
 } from '@ionic/react';
 import './Home.css';
-import {
-  arrowDownOutline,
-  arrowForwardOutline,
-  arrowUpOutline,
-} from 'ionicons/icons';
+import { arrowDownOutline, arrowUpOutline } from 'ionicons/icons';
 import moment from 'moment';
 import { useLocalStorage } from '../common/useLocalStorage';
 
 const Home = () => {
   const [present] = useIonToast();
+  const [showAlert] = useIonAlert();
   const containerId = useRef(null);
   const { loading, error, data, refetch } = useQuery(GET_NEW_GAME_QUERY, {
     fetchPolicy: 'no-cache',
@@ -116,20 +114,27 @@ const Home = () => {
     setPredicted(false);
   };
 
+  const resetScore = () => {
+    showAlert({
+      message: 'Bad Score? ;) Want to reset Score?',
+      buttons: ['Cancel', { text: 'Ok', handler: () => setScore(0) }],
+    });
+  };
+
   return (
     <IonPage>
       <IonContent fullscreen>
         <div ref={containerId} slot="fixed"></div>
 
         <IonAlert
-          header="Start Game"
-          message="Predict if the stock will go up or down 5%."
+          header="BreakOut Game"
+          message="Press ↑ or ↓ arrow below to predict stock movement of 5%."
           isOpen
           buttons={[{ text: 'Start' }]}
         />
 
         <IonFab vertical="top" horizontal="end" slot="fixed">
-          <IonFabButton color="danger">
+          <IonFabButton color="danger" onClick={resetScore}>
             {score}
             <br />
             {'Score'}
@@ -161,8 +166,9 @@ const Home = () => {
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={nextGame}>
+            {'➜'}
+            <br />
             {'Next'}
-            <IonIcon icon={arrowForwardOutline} />
           </IonFabButton>
         </IonFab>
       </IonContent>
