@@ -27,6 +27,28 @@ const toastOptions = {
   cssClass: 'toast',
 };
 
+const defaultChartOptions = {
+  watermark: {
+    visible: false,
+  },
+  rightPriceScale: {
+    visible: false,
+  },
+};
+
+const afterPredictionChartOptions = {
+  watermark: {
+    color: 'red',
+    visible: true,
+    fontSize: 16,
+    horzAlign: 'left',
+    vertAlign: 'top',
+  },
+  rightPriceScale: {
+    visible: true,
+  },
+};
+
 const Home = () => {
   const [showToast] = useIonToast();
   const [showAlert] = useIonAlert();
@@ -62,38 +84,13 @@ const Home = () => {
   }, []);
 
   if (!loading && !error && data) {
-    let priceData = [
-      ...data.getNewGame.price_history,
-      ...data.getNewGame.future_price_history,
-    ];
-
-    priceData = priceData
-      .sort((a, b) => (a.timeStamp > b.timeStamp ? 1 : -1))
-      .map(price => {
-        return {
-          open: price.open,
-          close: price.close,
-          low: price.low,
-          high: price.high,
-          volume: price.volume,
-          time: moment.unix(price.timeStamp / 1000).format('YYYY-MM-DD'),
-        };
-      });
-
-    const volumeData = priceData.map(d => ({ time: d.time, value: d.volume }));
+    var { priceData, volumeData } = computeChartData(data.getNewGame);
 
     if (predicted) {
       candleSeries.setData(priceData);
       volumeSeries.setData(volumeData);
     } else {
-      containerId.current.applyOptions({
-        watermark: {
-          visible: false,
-        },
-        rightPriceScale: {
-          visible: false,
-        },
-      });
+      containerId.current.applyOptions(defaultChartOptions);
       candleSeries.setData(
         priceData.slice(0, data.getNewGame.price_history.length),
       );
@@ -124,16 +121,10 @@ const Home = () => {
     setAttempts(attempts + 1);
 
     containerId.current.applyOptions({
+      ...afterPredictionChartOptions,
       watermark: {
-        color: 'red',
-        visible: true,
+        ...afterPredictionChartOptions.watermark,
         text: data.getNewGame.symbol,
-        fontSize: 16,
-        horzAlign: 'left',
-        vertAlign: 'top',
-      },
-      rightPriceScale: {
-        visible: true,
       },
     });
     setPredicted(true);
@@ -244,5 +235,25 @@ export const GET_NEW_GAME_QUERY = gql`
     }
   }
 `;
+
+const computeChartData = gameData => {
+  let priceData = [...gameData.price_history, ...gameData.future_price_history];
+
+  priceData = priceData
+    .sort((a, b) => (a.timeStamp > b.timeStamp ? 1 : -1))
+    .map(price => {
+      return {
+        open: price.open,
+        close: price.close,
+        low: price.low,
+        high: price.high,
+        volume: price.volume,
+        time: moment.unix(price.timeStamp / 1000).format('YYYY-MM-DD'),
+      };
+    });
+
+  const volumeData = priceData.map(d => ({ time: d.time, value: d.volume }));
+  return { priceData, volumeData };
+};
 
 export default Home;
