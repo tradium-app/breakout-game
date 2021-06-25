@@ -4,21 +4,20 @@ import { Storage } from '@ionic/storage';
 const storage = new Storage();
 storage.create();
 
-export const useLocalStorage = (key, defaultValue) => {
-  const [value, setValue] = useState(0);
+export const useIonicStorage = (key, defaultValue) => {
+  const [value, setValue] = useState(defaultValue);
 
   useEffect(() => {
     (async function () {
       const stored = await storage.get(key);
-
-      const initial = stored ? parseInt(stored) : defaultValue;
+      const initial = stored ? JSON.parse(stored) : defaultValue;
       setValue(initial);
     })();
   }, []);
 
   useEffect(() => {
     (async function () {
-      await storage.set(key, parseInt(value));
+      await storage.set(key, JSON.parse(value));
     })();
   }, [key, value]);
 

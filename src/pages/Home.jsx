@@ -11,13 +11,15 @@ import {
   IonFabButton,
   IonIcon,
   IonAlert,
+  IonChip,
+  IonLabel,
   useIonAlert,
   useIonToast,
 } from '@ionic/react';
 import './Home.css';
 import { arrowDownOutline, arrowUpOutline } from 'ionicons/icons';
 import moment from 'moment';
-import { useLocalStorage } from '../common/useLocalStorage';
+import { useIonicStorage } from '../common/useIonicStorage';
 
 const Home = () => {
   const [present] = useIonToast();
@@ -27,7 +29,8 @@ const Home = () => {
     fetchPolicy: 'no-cache',
   });
   const [candleSeries, setCandleSeries] = useState(null);
-  const [score, setScore] = useLocalStorage('score', 0);
+  const [score, setScore] = useIonicStorage('score', 0);
+  const [attempts, setAttempts] = useIonicStorage('attempts', 0);
   const [predicted, setPredicted] = useState(false);
 
   useEffect(() => {
@@ -92,6 +95,7 @@ const Home = () => {
       present({ message: 'Oops!', position: 'top', duration: 300 });
       setScore(score - 1);
     }
+    setAttempts(attempts + 1);
 
     containerId.current.applyOptions({
       watermark: {
@@ -116,8 +120,18 @@ const Home = () => {
 
   const resetScore = () => {
     showAlert({
-      message: 'Bad Score? ;) Want to reset Score?',
-      buttons: ['Cancel', { text: 'Ok', handler: () => setScore(0) }],
+      header: 'Bad Score? ;)',
+      message: 'Want to reset it?',
+      buttons: [
+        'Cancel',
+        {
+          text: 'Ok',
+          handler: () => {
+            setScore(0);
+            setAttempts(0);
+          },
+        },
+      ],
     });
   };
 
@@ -134,11 +148,12 @@ const Home = () => {
         />
 
         <IonFab vertical="top" horizontal="end" slot="fixed">
-          <IonFabButton color="danger" onClick={resetScore}>
-            {score}
-            <br />
-            {'Score'}
-          </IonFabButton>
+          <IonChip onClick={resetScore}>
+            <IonLabel>Score: {score}</IonLabel>
+          </IonChip>
+          <IonChip onClick={resetScore}>
+            <IonLabel>Attempts: {attempts}</IonLabel>
+          </IonChip>
         </IonFab>
 
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
