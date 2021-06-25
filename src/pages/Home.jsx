@@ -20,34 +20,11 @@ import './Home.css';
 import { arrowDownOutline, arrowUpOutline } from 'ionicons/icons';
 import moment from 'moment';
 import { useIonicStorage } from '../common/useIonicStorage';
-
-const toastOptions = {
-  position: 'top',
-  duration: 300,
-  cssClass: 'toast',
-};
-
-const defaultChartOptions = {
-  watermark: {
-    visible: false,
-  },
-  rightPriceScale: {
-    visible: false,
-  },
-};
-
-const afterPredictionChartOptions = {
-  watermark: {
-    color: 'red',
-    visible: true,
-    fontSize: 16,
-    horzAlign: 'left',
-    vertAlign: 'top',
-  },
-  rightPriceScale: {
-    visible: true,
-  },
-};
+import {
+  toastOptions,
+  defaultChartOptions,
+  afterPredictionChartOptions,
+} from './configs';
 
 const Home = () => {
   const [showToast] = useIonToast();
