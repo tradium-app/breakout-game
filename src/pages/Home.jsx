@@ -20,15 +20,16 @@ import {
   arrowUpOutline,
 } from 'ionicons/icons';
 import moment from 'moment';
+import { useLocalStorage } from '../common/useLocalStorage';
 
-const Home: React.FC = () => {
+const Home = () => {
   const [present] = useIonToast();
   const containerId = useRef(null);
   const { loading, error, data, refetch } = useQuery(GET_NEW_GAME_QUERY, {
     fetchPolicy: 'no-cache',
   });
   const [candleSeries, setCandleSeries] = useState(null);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useLocalStorage('score', 0);
   const [predicted, setPredicted] = useState(false);
 
   useEffect(() => {
@@ -124,7 +125,7 @@ const Home: React.FC = () => {
           header="Start Game"
           message="Predict if the stock will go up or down 5%."
           isOpen
-          buttons={[{ text: 'Start', handler: d => console.log('starting') }]}
+          buttons={[{ text: 'Start' }]}
         />
 
         <IonFab vertical="top" horizontal="end" slot="fixed">

@@ -13,6 +13,7 @@
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
-    "process": "readonly"
+    "process": "readonly",
+    "window": "readonly"
   }
 }
