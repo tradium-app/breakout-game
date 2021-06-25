@@ -25,3 +25,22 @@ export const afterPredictionChartOptions = {
     visible: true,
   },
 };
+
+export const volumeSeriesOptions = {
+  priceFormat: {
+    type: 'volume',
+  },
+  priceScaleId: '',
+  priceLineVisible: false,
+  scaleMargins: {
+    top: 0.8,
+    bottom: 0,
+  },
+};
+
+export const markerOptions = {
+  position: 'aboveBar',
+  color: '#5d58e0',
+  shape: 'arrowDown',
+  text: 'Going up here?',
+};

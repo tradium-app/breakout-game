@@ -24,6 +24,8 @@ import {
   toastOptions,
   defaultChartOptions,
   afterPredictionChartOptions,
+  volumeSeriesOptions,
+  markerOptions,
 } from './configs';
 
 const Home = () => {
@@ -46,22 +48,13 @@ const Home = () => {
     });
     setCandleSeries(containerId.current.addCandlestickSeries({}));
 
-    const volSeries = containerId.current.addHistogramSeries({
-      priceFormat: {
-        type: 'volume',
-      },
-      priceScaleId: '',
-      priceLineVisible: false,
-      scaleMargins: {
-        top: 0.8,
-        bottom: 0,
-      },
-    });
+    const volSeries =
+      containerId.current.addHistogramSeries(volumeSeriesOptions);
     setVolumeSeries(volSeries);
   }, []);
 
   if (!loading && !error && data) {
-    var { priceData, volumeData } = computeChartData(data.getNewGame);
+    const { priceData, volumeData } = computeChartData(data.getNewGame);
 
     if (predicted) {
       candleSeries.setData(priceData);
@@ -74,9 +67,20 @@ const Home = () => {
       volumeSeries.setData(
         volumeData.slice(0, data.getNewGame.price_history.length),
       );
+      containerId.current.timeScale().fitContent();
     }
 
-    containerId.current.timeScale().fitContent();
+    const lastTimeStamp =
+      priceData[data.getNewGame.price_history.length - 1].time;
+
+    const markers = [
+      {
+        ...markerOptions,
+        time: lastTimeStamp,
+      },
+    ];
+
+    candleSeries.setMarkers(markers);
   }
 
   const predict = (prediction, actual) => {
