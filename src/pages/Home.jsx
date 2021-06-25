@@ -34,10 +34,11 @@ const Home = () => {
   const { loading, error, data, refetch } = useQuery(GET_NEW_GAME_QUERY, {
     fetchPolicy: 'no-cache',
   });
-  const [candleSeries, setCandleSeries] = useState(null);
   const [score, setScore] = useIonicStorage('score', 0);
   const [attempts, setAttempts] = useIonicStorage('attempts', 0);
   const [predicted, setPredicted] = useState(false);
+  const [candleSeries, setCandleSeries] = useState(null);
+  const [volumeSeries, setVolumeSeries] = useState(null);
 
   useEffect(() => {
     containerId.current = createChart(containerId.current, {
@@ -45,15 +46,28 @@ const Home = () => {
       height: window.innerHeight,
     });
     setCandleSeries(containerId.current.addCandlestickSeries({}));
+
+    const volSeries = containerId.current.addHistogramSeries({
+      priceFormat: {
+        type: 'volume',
+      },
+      priceScaleId: '',
+      priceLineVisible: false,
+      scaleMargins: {
+        top: 0.8,
+        bottom: 0,
+      },
+    });
+    setVolumeSeries(volSeries);
   }, []);
 
   if (!loading && !error && data) {
-    let chartData = [
+    let priceData = [
       ...data.getNewGame.price_history,
       ...data.getNewGame.future_price_history,
     ];
 
-    chartData = chartData
+    priceData = priceData
       .sort((a, b) => (a.timeStamp > b.timeStamp ? 1 : -1))
       .map(price => {
         return {
@@ -61,12 +75,16 @@ const Home = () => {
           close: price.close,
           low: price.low,
           high: price.high,
+          volume: price.volume,
           time: moment.unix(price.timeStamp / 1000).format('YYYY-MM-DD'),
         };
       });
 
+    const volumeData = priceData.map(d => ({ time: d.time, value: d.volume }));
+
     if (predicted) {
-      candleSeries.setData(chartData);
+      candleSeries.setData(priceData);
+      volumeSeries.setData(volumeData);
     } else {
       containerId.current.applyOptions({
         watermark: {
@@ -77,7 +95,10 @@ const Home = () => {
         },
       });
       candleSeries.setData(
-        chartData.slice(0, data.getNewGame.price_history.length),
+        priceData.slice(0, data.getNewGame.price_history.length),
+      );
+      volumeSeries.setData(
+        volumeData.slice(0, data.getNewGame.price_history.length),
       );
     }
 
@@ -210,6 +231,7 @@ export const GET_NEW_GAME_QUERY = gql`
         open
         high
         low
+        volume
       }
       future_price_history {
         timeStamp
@@ -217,6 +239,7 @@ export const GET_NEW_GAME_QUERY = gql`
         open
         high
         low
+        volume
       }
     }
   }
