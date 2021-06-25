@@ -21,8 +21,14 @@ import { arrowDownOutline, arrowUpOutline } from 'ionicons/icons';
 import moment from 'moment';
 import { useIonicStorage } from '../common/useIonicStorage';
 
+const toastOptions = {
+  position: 'top',
+  duration: 300,
+  cssClass: 'toast',
+};
+
 const Home = () => {
-  const [present] = useIonToast();
+  const [showToast] = useIonToast();
   const [showAlert] = useIonAlert();
   const containerId = useRef(null);
   const { loading, error, data, refetch } = useQuery(GET_NEW_GAME_QUERY, {
@@ -80,19 +86,18 @@ const Home = () => {
 
   const predict = (prediction, actual) => {
     if (predicted) {
-      present({
+      showToast({
+        ...toastOptions,
         message: 'Yo! Press Next button',
-        position: 'top',
-        duration: 300,
       });
       return;
     }
 
     if (prediction === actual) {
-      present({ message: 'Bravo!!', position: 'top', duration: 300 });
+      showToast({ ...toastOptions, message: 'Bravo!!' });
       setScore(score + 1);
     } else {
-      present({ message: 'Oops!', position: 'top', duration: 300 });
+      showToast({ ...toastOptions, message: 'Oops!' });
       setScore(score - 1);
     }
     setAttempts(attempts + 1);
@@ -120,12 +125,12 @@ const Home = () => {
 
   const resetScore = () => {
     showAlert({
-      header: 'Bad Score? ;)',
+      header: 'Bad Score :) ?',
       message: 'Want to reset it?',
       buttons: [
         'Cancel',
         {
-          text: 'Ok',
+          text: 'Yes',
           handler: () => {
             setScore(0);
             setAttempts(0);

@@ -1,0 +1,4 @@
+.toast {
+  text-align: center;
+  --width: fit-content;
+}
