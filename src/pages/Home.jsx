@@ -51,6 +51,7 @@ const Home = () => {
     const volSeries =
       containerId.current.addHistogramSeries(volumeSeriesOptions);
     setVolumeSeries(volSeries);
+    containerId.current.timeScale().applyOptions({ rightOffset: 10 });
   }, []);
 
   if (!loading && !error && data) {
@@ -60,13 +61,14 @@ const Home = () => {
       candleSeries.setData(priceData);
       volumeSeries.setData(volumeData);
     } else {
-      containerId.current.applyOptions(defaultChartOptions);
       candleSeries.setData(
         priceData.slice(0, data.getNewGame.price_history.length),
       );
       volumeSeries.setData(
         volumeData.slice(0, data.getNewGame.price_history.length),
       );
+
+      containerId.current.applyOptions(defaultChartOptions);
       containerId.current.timeScale().fitContent();
     }
 
