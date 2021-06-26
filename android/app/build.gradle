@@ -43,9 +43,6 @@ android {
             matchingFallbacks = ['debug', 'release']
         }
         release {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['debug', 'release']
         }
     }
