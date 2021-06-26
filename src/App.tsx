@@ -4,7 +4,7 @@ import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import graphqlClient from './graphql-client';
-import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -28,14 +28,9 @@ import { useEffect } from 'react';
 
 const App: React.FC = () => {
   useEffect(() => {
-    GoogleAnalytics.startTrackerWithId(process.env.REACT_APP_MEASUREMENTID)
-      .then(() => {
-        console.log('Google analytics is ready now');
-        GoogleAnalytics.trackView('test');
-        // Tracker is ready
-        // You can now track pages or set additional information such as AppVersion or UserId
-      })
-      .catch(e => console.log('Error starting GoogleAnalytics', e));
+    FirebaseAnalytics.logEvent('page_view', { page: 'dashboard' })
+      .then((res: any) => console.log(res))
+      .catch((error: any) => console.error(error));
   }, []);
 
   return (

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "918712114307",
+    "project_id": "breakout-qa",
+    "storage_bucket": "breakout-qa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918712114307:android:71693a12e64e8d60508fb6",
+        "android_client_info": {
+          "package_name": "com.tradiumapp.breakout.qa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918712114307-da9dob1o7g0p4lms4ktktbistb77l5rg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuYq1Mo7ePat0wsV6RNfzbnB9UCgXTH3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918712114307-da9dob1o7g0p4lms4ktktbistb77l5rg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
