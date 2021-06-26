@@ -15,9 +15,9 @@ export const defaultChartOptions = {
 
 export const afterPredictionChartOptions = {
   watermark: {
-    color: 'red',
+    color: 'rgba(255,82,82, 1)',
     visible: true,
-    fontSize: 16,
+    fontSize: 24,
     horzAlign: 'left',
     vertAlign: 'top',
   },
