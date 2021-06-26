@@ -10,9 +10,10 @@ import {
   IonFab,
   IonFabButton,
   IonIcon,
-  IonAlert,
   IonChip,
   IonLabel,
+  IonLoading,
+  IonAlert,
   useIonAlert,
   useIonToast,
 } from '@ionic/react';
@@ -34,6 +35,7 @@ const Home = () => {
   const containerId = useRef(null);
   const { loading, error, data, refetch } = useQuery(GET_NEW_GAME_QUERY, {
     fetchPolicy: 'no-cache',
+    notifyOnNetworkStatusChange: true,
   });
   const [score, setScore] = useIonicStorage('score', 0);
   const [attempts, setAttempts] = useIonicStorage('attempts', 0);
@@ -157,6 +159,8 @@ const Home = () => {
           isOpen
           buttons={[{ text: 'Start' }]}
         />
+
+        <IonLoading isOpen={loading} message={'Please wait...'} />
 
         <IonFab vertical="top" horizontal="end" slot="fixed">
           <IonChip onClick={resetScore}>
