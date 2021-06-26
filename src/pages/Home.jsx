@@ -235,7 +235,11 @@ const computeChartData = gameData => {
       };
     });
 
-  const volumeData = priceData.map(d => ({ time: d.time, value: d.volume }));
+  const volumeData = priceData.map(d => ({
+    time: d.time,
+    value: d.volume,
+    color: d.open > d.close ? 'rgba(255,82,82, 0.2)' : 'rgba(0, 150, 136, 0.2)',
+  }));
   return { priceData, volumeData };
 };
 
