@@ -1,6 +1,6 @@
 import { Redirect, Route } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client/react';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { IonApp, IonRouterOutlet, isPlatform } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import graphqlClient from './graphql-client';
@@ -28,9 +28,8 @@ import { useEffect } from 'react';
 
 const App: React.FC = () => {
   useEffect(() => {
-    FirebaseAnalytics.logEvent('page_view', { page: 'dashboard' })
-      .then((res: any) => console.log(res))
-      .catch((error: any) => console.error(error));
+    isPlatform('cordova') &&
+      FirebaseAnalytics.logEvent('page_view', { page: 'dashboard' });
   }, []);
 
   return (
