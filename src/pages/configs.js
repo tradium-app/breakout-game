@@ -42,6 +42,6 @@ export const markerOptions = {
   position: 'aboveBar',
   color: '#5d58e0',
   shape: 'arrowDown',
-  text: 'Going up here?',
+  text: 'Buy/Short?',
   size: 2,
 };

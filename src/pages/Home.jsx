@@ -101,7 +101,10 @@ const Home = () => {
     if (predicted) {
       showToast({
         ...toastOptions,
-        message: 'Yo! Press Next button',
+        message:
+          (prediction === actual
+            ? 'Yo! you were right.'
+            : 'Yo! you were wrong.') + ' Now press Next button',
       });
       return;
     }
@@ -160,7 +163,7 @@ const Home = () => {
 
         <IonAlert
           header="BreakOut Game"
-          message="Predict 10% stock move by pressing ↑ or ↓ arrow below."
+          message="Predict 10% stock movement and buy/short stock."
           isOpen
           buttons={[{ text: 'Start' }]}
         />
