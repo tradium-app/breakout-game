@@ -141,7 +141,7 @@ const Home = () => {
 
         <IonAlert
           header="BreakOut Game"
-          message="Press ↑ or ↓ arrow below to predict stock movement of 10%."
+          message="Predict 10% stock move by pressing ↑ or ↓ arrow below."
           isOpen
           buttons={[{ text: 'Start' }]}
         />
