@@ -54,23 +54,35 @@ const Home = () => {
     containerId.current.timeScale().applyOptions({ rightOffset: 10 });
   }, []);
 
+  let priceData, volumeData;
+
   if (!loading && !error && data) {
-    const { priceData, volumeData } = computeChartData(data.getNewGame);
+    ({ priceData, volumeData } = computeChartData(data.getNewGame));
+  }
 
-    if (predicted) {
-      candleSeries.setData(priceData);
-      volumeSeries.setData(volumeData);
-    } else {
-      candleSeries.setData(
-        priceData.slice(0, data.getNewGame.price_history.length),
-      );
-      volumeSeries.setData(
-        volumeData.slice(0, data.getNewGame.price_history.length),
-      );
-
-      containerId.current.applyOptions(defaultChartOptions);
-      containerId.current.timeScale().fitContent();
+  useEffect(() => {
+    if (priceData) {
+      for (
+        let index = data.getNewGame.price_history.length;
+        index < priceData.length;
+        index++
+      ) {
+        candleSeries.update(priceData[index]);
+        volumeSeries.update(volumeData[index]);
+      }
     }
+  }, [predicted]);
+
+  if (!loading && !error && priceData && !predicted) {
+    candleSeries.setData(
+      priceData.slice(0, data.getNewGame.price_history.length),
+    );
+    volumeSeries.setData(
+      volumeData.slice(0, data.getNewGame.price_history.length),
+    );
+
+    containerId.current.applyOptions(defaultChartOptions);
+    containerId.current.timeScale().fitContent();
 
     const lastTimeStamp =
       priceData[data.getNewGame.price_history.length - 1].time;
@@ -113,8 +125,8 @@ const Home = () => {
   };
 
   const nextGame = () => {
-    refetch();
     setPredicted(false);
+    refetch();
   };
 
   const resetScore = () => {
