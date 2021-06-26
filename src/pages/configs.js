@@ -1,6 +1,6 @@
 export const toastOptions = {
   position: 'top',
-  duration: 300,
+  duration: 1000,
   cssClass: 'toast',
 };
 

@@ -9,7 +9,6 @@ import {
   IonCol,
   IonFab,
   IonFabButton,
-  IonIcon,
   IonChip,
   IonLabel,
   IonLoading,
@@ -18,7 +17,6 @@ import {
   useIonToast,
 } from '@ionic/react';
 import './Home.css';
-import { arrowDownOutline, arrowUpOutline } from 'ionicons/icons';
 import moment from 'moment';
 import { useIonicStorage } from '../common/useIonicStorage';
 import {
@@ -37,8 +35,8 @@ const Home = () => {
     fetchPolicy: 'no-cache',
     notifyOnNetworkStatusChange: true,
   });
-  const [score, setScore] = useIonicStorage('score', 0);
-  const [attempts, setAttempts] = useIonicStorage('attempts', 0);
+  const [transactions, setTransactions] = useIonicStorage('transactions', 0);
+  const [balance, setBalance] = useIonicStorage('balance', 10000);
   const [predicted, setPredicted] = useState(false);
   const [candleSeries, setCandleSeries] = useState(null);
   const [volumeSeries, setVolumeSeries] = useState(null);
@@ -99,7 +97,7 @@ const Home = () => {
     candleSeries.setMarkers(markers);
   }
 
-  const predict = (prediction, actual) => {
+  const predict = (action, prediction, actual) => {
     if (predicted) {
       showToast({
         ...toastOptions,
@@ -110,11 +108,18 @@ const Home = () => {
 
     if (prediction === actual) {
       showToast({ ...toastOptions, message: 'Bravo!!' });
-      setScore(score + 1);
     } else {
       showToast({ ...toastOptions, message: 'Oops!' });
     }
-    setAttempts(attempts + 1);
+
+    const newBalance = computeNewBalance(
+      action,
+      balance,
+      priceData[data.getNewGame.price_history.length - 1].close,
+      priceData[priceData.length - 1].close,
+    );
+    setBalance(newBalance);
+    setTransactions(transactions + 1);
 
     containerId.current.applyOptions({
       ...afterPredictionChartOptions,
@@ -131,17 +136,17 @@ const Home = () => {
     refetch();
   };
 
-  const resetScore = () => {
+  const resetBalance = () => {
     showAlert({
-      header: 'Hard to predict 😅 ?',
-      message: 'Want to reset score?',
+      header: 'Losing money 😅 ?',
+      message: 'Want to reset balance to 10,000?',
       buttons: [
         'Cancel',
         {
           text: 'Yes',
           handler: () => {
-            setScore(0);
-            setAttempts(0);
+            setBalance(10000);
+            setTransactions(0);
           },
         },
       ],
@@ -162,12 +167,20 @@ const Home = () => {
 
         <IonLoading isOpen={loading} message={'Please wait...'} />
 
-        <IonFab vertical="top" horizontal="end" slot="fixed">
-          <IonChip onClick={resetScore}>
-            <IonLabel>Score: {score}</IonLabel>
+        <IonFab
+          vertical="top"
+          horizontal="end"
+          slot="fixed"
+          className="top-balance"
+        >
+          <IonChip onClick={resetBalance}>
+            <IonLabel>
+              Balance:{' '}
+              {balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+            </IonLabel>
           </IonChip>
-          <IonChip onClick={resetScore}>
-            <IonLabel>Attempts: {attempts}</IonLabel>
+          <IonChip>
+            <IonLabel>Transactions: {transactions}</IonLabel>
           </IonChip>
         </IonFab>
 
@@ -176,19 +189,23 @@ const Home = () => {
             <IonCol>
               <IonFabButton
                 onClick={() =>
-                  predict(true, data?.getNewGame?.willPriceIncrease)
+                  predict('buy', true, data?.getNewGame?.willPriceIncrease)
                 }
               >
-                <IonIcon icon={arrowUpOutline} />
+                {'▲'}
+                <br />
+                {'Buy'}
               </IonFabButton>
             </IonCol>
             <IonCol>
               <IonFabButton
                 onClick={() =>
-                  predict(true, data?.getNewGame?.willPriceDecrease)
+                  predict('short', true, data?.getNewGame?.willPriceDecrease)
                 }
               >
-                <IonIcon icon={arrowDownOutline} />
+                {'▼'}
+                <br />
+                {'Short'}
               </IonFabButton>
             </IonCol>
           </IonRow>
@@ -196,7 +213,7 @@ const Home = () => {
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={nextGame}>
-            {'➜'}
+            {'➤'}
             <br />
             {'Next'}
           </IonFabButton>
@@ -256,6 +273,19 @@ const computeChartData = gameData => {
     color: d.open > d.close ? 'rgba(255,82,82, 0.2)' : 'rgba(0, 150, 136, 0.2)',
   }));
   return { priceData, volumeData };
+};
+
+const computeNewBalance = (
+  action,
+  initialBalance,
+  purchasePrice,
+  sellPrice,
+) => {
+  const percentChange = (sellPrice - purchasePrice) / purchasePrice;
+
+  return action === 'buy'
+    ? initialBalance * (1 + percentChange)
+    : initialBalance * (1 - percentChange);
 };
 
 export default Home;

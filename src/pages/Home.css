@@ -2,3 +2,7 @@
   text-align: center;
   --width: fit-content;
 }
+
+.top-balance {
+  margin-right: 3em;
+}
