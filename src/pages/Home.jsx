@@ -99,7 +99,6 @@ const Home = () => {
       setScore(score + 1);
     } else {
       showToast({ ...toastOptions, message: 'Oops!' });
-      setScore(score - 1);
     }
     setAttempts(attempts + 1);
 
@@ -120,8 +119,8 @@ const Home = () => {
 
   const resetScore = () => {
     showAlert({
-      header: 'Bad Score :) ?',
-      message: 'Want to reset it?',
+      header: 'Hard to predict 😅 ?',
+      message: 'Want to reset score?',
       buttons: [
         'Cancel',
         {
@@ -142,7 +141,7 @@ const Home = () => {
 
         <IonAlert
           header="BreakOut Game"
-          message="Press ↑ or ↓ arrow below to predict stock movement of 5%."
+          message="Press ↑ or ↓ arrow below to predict stock movement of 10%."
           isOpen
           buttons={[{ text: 'Start' }]}
         />

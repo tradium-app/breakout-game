@@ -43,4 +43,5 @@ export const markerOptions = {
   color: '#5d58e0',
   shape: 'arrowDown',
   text: 'Going up here?',
+  size: 2,
 };
