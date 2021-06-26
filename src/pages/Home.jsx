@@ -53,7 +53,7 @@ const Home = () => {
     const volSeries =
       containerId.current.addHistogramSeries(volumeSeriesOptions);
     setVolumeSeries(volSeries);
-    containerId.current.timeScale().applyOptions({ rightOffset: 10 });
+    containerId.current.timeScale().applyOptions({ rightOffset: 15 });
   }, []);
 
   let priceData, volumeData;
