@@ -113,22 +113,14 @@ const Home = () => {
   }
 
   const predict = (action, prediction, actual) => {
-    if (predicted) {
-      showToast({
-        ...toastOptions,
-        message:
-          (prediction === actual
-            ? 'Yo! you were right.'
-            : 'Yo! you were wrong.') + ' Now press Next button',
-      });
-      return;
-    }
+    const message = composeResultMessage(prediction, actual, action);
 
-    if (prediction === actual) {
-      showToast({ ...toastOptions, message: 'Bravo!!' });
-    } else {
-      showToast({ ...toastOptions, message: 'Oops!' });
-    }
+    showToast({
+      ...toastOptions,
+      message: message + ' Press Next for new prediction.',
+    });
+
+    if (predicted) return;
 
     const newBalance = computeNewBalance(
       action,
@@ -314,6 +306,27 @@ const computeNewBalance = (
   return action === 'buy'
     ? initialBalance * (1 + percentChange)
     : initialBalance * (1 - percentChange);
+};
+
+const composeResultMessage = (prediction, actual, action) => {
+  let message = '';
+
+  if (prediction === actual) {
+    message += 'Yep! ';
+    if (action === 'buy') {
+      message += 'It went up.';
+    } else {
+      message += 'It went down.';
+    }
+  } else {
+    message += 'Nope! ';
+    if (action === 'buy') {
+      message += 'It went down.';
+    } else {
+      message += 'It went up.';
+    }
+  }
+  return message;
 };
 
 export default Home;
