@@ -169,6 +169,7 @@ const Home = () => {
     <IonPage>
       <IonContent fullscreen>
         <div ref={containerId} slot="fixed"></div>
+
         <IonAlert
           header="BreakOut Game"
           message="Predict 10% stock movement and buy/short stock."
@@ -178,12 +179,7 @@ const Home = () => {
 
         <IonLoading isOpen={loading} message={'Please wait...'} />
 
-        <IonFab
-          vertical="top"
-          horizontal="start"
-          slot="fixed"
-          className="top-legend"
-        >
+        <IonFab horizontal="start" vertical="top" slot="fixed">
           <IonLabel>{predicted && data?.getNewGame?.symbol}</IonLabel>
           <br />
           <IonLabel>ema: 12</IonLabel>
