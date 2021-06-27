@@ -5,6 +5,12 @@ export const toastOptions = {
 };
 
 export const defaultChartOptions = {
+  handleScale: {
+    axisPressedMouseMove: {
+      time: true,
+      price: false,
+    },
+  },
   rightPriceScale: {
     visible: false,
   },
@@ -14,6 +20,10 @@ export const afterPredictionChartOptions = {
   rightPriceScale: {
     visible: true,
   },
+};
+
+export const candleSeriesOptions = {
+  priceLineVisible: false,
 };
 
 export const volumeSeriesOptions = {

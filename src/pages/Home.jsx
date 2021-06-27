@@ -23,6 +23,7 @@ import {
   toastOptions,
   defaultChartOptions,
   afterPredictionChartOptions,
+  candleSeriesOptions,
   volumeSeriesOptions,
   markerOptions,
   emaSeriesOptions,
@@ -49,7 +50,9 @@ const Home = () => {
       width: window.innerWidth,
       height: window.innerHeight,
     });
-    setCandleSeries(containerId.current.addCandlestickSeries({}));
+    setCandleSeries(
+      containerId.current.addCandlestickSeries(candleSeriesOptions),
+    );
 
     const volSeries =
       containerId.current.addHistogramSeries(volumeSeriesOptions);
@@ -63,7 +66,7 @@ const Home = () => {
 
   let priceData, volumeData, emaData, predictionPoint;
 
-  if (!loading && !error && data) {
+  if (!loading && !error && data.getNewGame) {
     ({ priceData, volumeData, emaData } = computeChartData(data.getNewGame));
     predictionPoint = priceData[data.getNewGame.price_history.length].time;
   }
@@ -117,7 +120,7 @@ const Home = () => {
 
     showToast({
       ...toastOptions,
-      message: message + ' Press Next for new prediction.',
+      message: message + (predicted ? ' Press Next for new prediction.' : ''),
     });
 
     if (predicted) return;
@@ -164,12 +167,12 @@ const Home = () => {
 
         <IonAlert
           header="BreakOut Game"
-          message="Predict 10% stock movement and buy/short stock."
+          message="Will the stock move 10% up/down in next 10 days?"
           isOpen
           buttons={[{ text: 'Start' }]}
         />
 
-        <IonLoading isOpen={loading} message={'Please wait...'} />
+        <IonLoading isOpen={loading} message={'Loading game...'} />
 
         <IonFab horizontal="start" vertical="top" slot="fixed">
           <IonLabel>{predicted && data?.getNewGame?.symbol}</IonLabel>
