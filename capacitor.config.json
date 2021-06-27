@@ -1,6 +1,6 @@
 {
   "appId": "com.tradiumapp.breakout.qa",
-  "appName": "breakout-game",
+  "appName": "Breakout Game",
   "webDir": "build",
   "bundledWebRuntime": false
 }
