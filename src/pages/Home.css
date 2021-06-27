@@ -6,3 +6,8 @@
 .top-balance {
   margin-right: 3em;
 }
+
+.top-legend {
+  margin-left: 4px;
+  opacity: 80%;
+}

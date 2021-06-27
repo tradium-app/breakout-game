@@ -5,22 +5,12 @@ export const toastOptions = {
 };
 
 export const defaultChartOptions = {
-  watermark: {
-    visible: false,
-  },
   rightPriceScale: {
     visible: false,
   },
 };
 
 export const afterPredictionChartOptions = {
-  watermark: {
-    color: 'rgba(255,82,82, 1)',
-    visible: true,
-    fontSize: 24,
-    horzAlign: 'left',
-    vertAlign: 'top',
-  },
   rightPriceScale: {
     visible: true,
   },
@@ -40,6 +30,7 @@ export const volumeSeriesOptions = {
 
 export const emaSeriesOptions = {
   priceLineVisible: false,
+  crosshairMarkerVisible: false,
   lineWidth: 1,
   lineStyle: 2,
 };
