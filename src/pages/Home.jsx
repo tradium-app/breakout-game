@@ -25,7 +25,9 @@ import {
   afterPredictionChartOptions,
   volumeSeriesOptions,
   markerOptions,
+  emaSeriesOptions,
 } from './configs';
+import { ema } from 'technicalindicators';
 
 const Home = () => {
   const [showToast] = useIonToast();
@@ -40,6 +42,7 @@ const Home = () => {
   const [predicted, setPredicted] = useState(false);
   const [candleSeries, setCandleSeries] = useState(null);
   const [volumeSeries, setVolumeSeries] = useState(null);
+  const [emaSeries, setEmaSeries] = useState(null);
 
   useEffect(() => {
     containerId.current = createChart(containerId.current, {
@@ -51,17 +54,22 @@ const Home = () => {
     const volSeries =
       containerId.current.addHistogramSeries(volumeSeriesOptions);
     setVolumeSeries(volSeries);
+
+    const emaSeries = containerId.current.addLineSeries(emaSeriesOptions);
+    setEmaSeries(emaSeries);
+
     containerId.current.timeScale().applyOptions({ rightOffset: 15 });
   }, []);
 
-  let priceData, volumeData;
+  let priceData, volumeData, emaData, predictionPoint;
 
   if (!loading && !error && data) {
-    ({ priceData, volumeData } = computeChartData(data.getNewGame));
+    ({ priceData, volumeData, emaData } = computeChartData(data.getNewGame));
+    predictionPoint = priceData[data.getNewGame.price_history.length].time;
   }
 
   useEffect(() => {
-    if (priceData) {
+    if (predicted && priceData) {
       for (
         let index = data.getNewGame.price_history.length;
         index < priceData.length;
@@ -70,6 +78,12 @@ const Home = () => {
         candleSeries.update(priceData[index]);
         volumeSeries.update(volumeData[index]);
       }
+
+      emaData
+        .filter(ed => ed.time > predictionPoint)
+        .forEach(ed => {
+          emaSeries.update(ed);
+        });
     }
   }, [predicted]);
 
@@ -80,6 +94,7 @@ const Home = () => {
     volumeSeries.setData(
       volumeData.slice(0, data.getNewGame.price_history.length),
     );
+    emaSeries.setData(emaData.filter(ed => ed.time <= predictionPoint));
 
     containerId.current.applyOptions(defaultChartOptions);
     containerId.current.timeScale().fitContent();
@@ -275,7 +290,17 @@ const computeChartData = gameData => {
     value: d.volume,
     color: d.open > d.close ? 'rgba(255,82,82, 0.2)' : 'rgba(0, 150, 136, 0.2)',
   }));
-  return { priceData, volumeData };
+
+  const emaPeriod = 12;
+  const emaInputData = priceData.map(d => d.close);
+  const emaOnClose = ema({ period: emaPeriod, values: emaInputData });
+  const emaData = priceData.slice(emaPeriod).map((d, index) => ({
+    time: d.time,
+    close: d.close,
+    value: emaOnClose[index],
+  }));
+
+  return { priceData, volumeData, emaData };
 };
 
 const computeNewBalance = (

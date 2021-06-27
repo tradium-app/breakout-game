@@ -38,6 +38,12 @@ export const volumeSeriesOptions = {
   },
 };
 
+export const emaSeriesOptions = {
+  priceLineVisible: false,
+  lineWidth: 1,
+  lineStyle: 2,
+};
+
 export const markerOptions = {
   position: 'aboveBar',
   color: '#5d58e0',
