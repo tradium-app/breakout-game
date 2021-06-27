@@ -30,6 +30,8 @@ import {
 } from './configs';
 import { ema } from 'technicalindicators';
 
+const emaPeriod = 26;
+
 const Home = () => {
   const [showToast] = useIonToast();
   const [showAlert] = useIonAlert();
@@ -177,7 +179,7 @@ const Home = () => {
         <IonFab horizontal="start" vertical="top" slot="fixed">
           <IonLabel>{predicted && data?.getNewGame?.symbol}</IonLabel>
           <br />
-          <IonLabel>ema: 12</IonLabel>
+          <IonLabel>ema:{emaPeriod}</IonLabel>
         </IonFab>
 
         <IonFab
@@ -286,7 +288,6 @@ const computeChartData = gameData => {
     color: d.open > d.close ? 'rgba(255,82,82, 0.2)' : 'rgba(0, 150, 136, 0.2)',
   }));
 
-  const emaPeriod = 12;
   const emaInputData = priceData.map(d => d.close);
   const emaOnClose = ema({ period: emaPeriod, values: emaInputData });
   const emaData = priceData.slice(emaPeriod).map((d, index) => ({
