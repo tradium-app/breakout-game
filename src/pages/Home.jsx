@@ -186,7 +186,12 @@ const Home = () => {
           </IonLabel>
         </IonFab>
 
-        <IonFab vertical="top" horizontal="center" slot="fixed">
+        <IonFab
+          vertical="top"
+          horizontal="end"
+          slot="fixed"
+          className="top-balance"
+        >
           <IonButton onClick={resetBalance} color="warning">
             <IonLabel>
               Balance:{' '}
