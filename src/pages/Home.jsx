@@ -14,6 +14,7 @@ import {
   IonAlert,
   useIonAlert,
   useIonToast,
+  IonChip,
 } from '@ionic/react';
 import './Home.css';
 import moment from 'moment';
@@ -194,7 +195,7 @@ const Home = () => {
         >
           <IonButton onClick={resetBalance} color="warning">
             <IonLabel>
-              Balance:{' '}
+              {'Balance: '}
               {balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}
             </IonLabel>
           </IonButton>
