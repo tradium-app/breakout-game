@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
 import { createChart } from 'lightweight-charts';
 import {
@@ -9,7 +8,7 @@ import {
   IonCol,
   IonFab,
   IonFabButton,
-  IonChip,
+  IonButton,
   IonLabel,
   IonLoading,
   IonAlert,
@@ -29,6 +28,7 @@ import {
   emaSeriesOptions,
 } from './configs';
 import { ema } from 'technicalindicators';
+import { GET_NEW_GAME_QUERY } from './Home_Query';
 
 const emaPeriod = 26;
 
@@ -187,12 +187,12 @@ const Home = () => {
         </IonFab>
 
         <IonFab vertical="top" horizontal="center" slot="fixed">
-          <IonChip onClick={resetBalance}>
+          <IonButton onClick={resetBalance} color="warning">
             <IonLabel>
               Balance:{' '}
               {balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}
             </IonLabel>
-          </IonChip>
+          </IonButton>
         </IonFab>
 
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
@@ -233,34 +233,6 @@ const Home = () => {
     </IonPage>
   );
 };
-
-export const GET_NEW_GAME_QUERY = gql`
-  query getNewGame {
-    getNewGame {
-      _id
-      symbol
-      timeStamp
-      willPriceIncrease
-      willPriceDecrease
-      price_history {
-        timeStamp
-        close
-        open
-        high
-        low
-        volume
-      }
-      future_price_history {
-        timeStamp
-        close
-        open
-        high
-        low
-        volume
-      }
-    }
-  }
-`;
 
 const computeChartData = gameData => {
   let priceData = [...gameData.price_history, ...gameData.future_price_history];

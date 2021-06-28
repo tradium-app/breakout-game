@@ -39,6 +39,7 @@ export const volumeSeriesOptions = {
 };
 
 export const emaSeriesOptions = {
+  lastValueVisible: false,
   priceLineVisible: false,
   crosshairMarkerVisible: false,
   lineWidth: 1,
