@@ -169,7 +169,7 @@ const Home = () => {
 
         <IonAlert
           header="BreakOut Game"
-          message="Will the stock move 10% up/down in next 10 days?"
+          message="Predict if the stock will move 10% up/down in next 10 days."
           isOpen
           buttons={[{ text: 'Start' }]}
         />
@@ -179,23 +179,19 @@ const Home = () => {
         <IonFab horizontal="start" vertical="top" slot="fixed">
           <IonLabel>{predicted && data?.getNewGame?.symbol}</IonLabel>
           <br />
-          <IonLabel>ema:{emaPeriod}</IonLabel>
+          <IonLabel className="tiny-labels">EMA:{emaPeriod}</IonLabel>
+          <br />
+          <IonLabel className="tiny-labels">
+            Transactions:{transactions}
+          </IonLabel>
         </IonFab>
 
-        <IonFab
-          vertical="top"
-          horizontal="end"
-          slot="fixed"
-          className="top-balance"
-        >
+        <IonFab vertical="top" horizontal="center" slot="fixed">
           <IonChip onClick={resetBalance}>
             <IonLabel>
               Balance:{' '}
               {balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}
             </IonLabel>
-          </IonChip>
-          <IonChip>
-            <IonLabel>Transactions: {transactions}</IonLabel>
           </IonChip>
         </IonFab>
 
