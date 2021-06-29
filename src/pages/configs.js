@@ -14,6 +14,9 @@ export const defaultChartOptions = {
   rightPriceScale: {
     visible: false,
   },
+  crosshair: {
+    mode: 0,
+  },
 };
 
 export const afterPredictionChartOptions = {

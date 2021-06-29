@@ -14,7 +14,6 @@ import {
   IonAlert,
   useIonAlert,
   useIonToast,
-  IonChip,
 } from '@ionic/react';
 import './Home.css';
 import moment from 'moment';
