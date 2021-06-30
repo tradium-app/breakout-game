@@ -36,6 +36,7 @@ const Home = () => {
   const [score, setScore] = useIonicStorage('score', 0);
   const [transactions, setTransactions] = useIonicStorage('transactions', 0);
   const [balance, setBalance] = useIonicStorage('balance', 10000);
+  const [currentProfit, setCurrentProfit] = useIonicStorage('profit', 0);
 
   const [showToast] = useIonToast();
   const [showAlert] = useIonAlert();
@@ -119,15 +120,21 @@ const Home = () => {
     candleSeries.setMarkers(markers);
   }
 
-  const predict = (action, prediction, actual) => {
-    const message = composeResultMessage(prediction, actual, action);
+  const predict = action => {
+    if (predicted) {
+      let message = `You already ${
+        currentProfit > 0 ? 'gained' : 'lost'
+      } ${Math.abs(currentProfit).toLocaleString(undefined, {
+        maximumFractionDigits: 0,
+      })}.  Press Next for new prediction.`;
 
-    showToast({
-      ...toastOptions,
-      message: message + (predicted ? ' Press Next for new prediction.' : ''),
-    });
+      showToast({
+        ...toastOptions,
+        message,
+      });
 
-    if (predicted) return;
+      return;
+    }
 
     const newBalance = computeNewBalance(
       action,
@@ -135,9 +142,23 @@ const Home = () => {
       priceData[data.getNewGame.price_history.length - 1].close,
       priceData[priceData.length - 1].close,
     );
+
+    const change = Math.abs(newBalance - balance).toLocaleString(undefined, {
+      maximumFractionDigits: 0,
+    });
+
+    let message = newBalance > balance ? 'Bravo!. ' : 'Oops!. ';
+    message += `You ${newBalance > balance ? 'gained' : 'lost'} ${change}.`;
+
+    showToast({
+      ...toastOptions,
+      message,
+    });
+
+    setCurrentProfit(newBalance - balance);
     setBalance(newBalance);
     setTransactions(transactions + 1);
-    prediction === actual && setScore(score + 1);
+    newBalance > balance && setScore(score + 1);
 
     containerId.current.applyOptions(afterPredictionChartOptions);
     setPredicted(true);
@@ -212,22 +233,14 @@ const Home = () => {
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
           <IonRow>
             <IonCol>
-              <IonFabButton
-                onClick={() =>
-                  predict('buy', true, data?.getNewGame?.willPriceIncrease)
-                }
-              >
+              <IonFabButton onClick={() => predict('buy')}>
                 {'▲'}
                 <br />
                 {'Buy'}
               </IonFabButton>
             </IonCol>
             <IonCol>
-              <IonFabButton
-                onClick={() =>
-                  predict('short', true, data?.getNewGame?.willPriceDecrease)
-                }
-              >
+              <IonFabButton onClick={() => predict('short')}>
                 {'▼'}
                 <br />
                 {'Short'}
