@@ -33,6 +33,10 @@ import { GET_NEW_GAME_QUERY } from './Home_Query';
 const emaPeriod = 26;
 
 const Home = () => {
+  const [score, setScore] = useIonicStorage('score', 0);
+  const [transactions, setTransactions] = useIonicStorage('transactions', 0);
+  const [balance, setBalance] = useIonicStorage('balance', 10000);
+
   const [showToast] = useIonToast();
   const [showAlert] = useIonAlert();
   const containerId = useRef(null);
@@ -40,8 +44,6 @@ const Home = () => {
     fetchPolicy: 'no-cache',
     notifyOnNetworkStatusChange: true,
   });
-  const [transactions, setTransactions] = useIonicStorage('transactions', 0);
-  const [balance, setBalance] = useIonicStorage('balance', 10000);
   const [predicted, setPredicted] = useState(false);
   const [candleSeries, setCandleSeries] = useState(null);
   const [volumeSeries, setVolumeSeries] = useState(null);
@@ -135,6 +137,7 @@ const Home = () => {
     );
     setBalance(newBalance);
     setTransactions(transactions + 1);
+    prediction === actual && setScore(score + 1);
 
     containerId.current.applyOptions(afterPredictionChartOptions);
     setPredicted(true);
@@ -155,6 +158,7 @@ const Home = () => {
           text: 'Yes',
           handler: () => {
             setBalance(10000);
+            setScore(0);
             setTransactions(0);
           },
         },
@@ -179,10 +183,15 @@ const Home = () => {
         <IonFab horizontal="start" vertical="top" slot="fixed">
           <IonLabel>{predicted && data?.getNewGame?.symbol}</IonLabel>
           <br />
-          <IonLabel className="tiny-labels">EMA:{emaPeriod}</IonLabel>
+          <IonLabel className="tiny-labels">EMA: {emaPeriod}</IonLabel>
           <br />
           <IonLabel className="tiny-labels">
-            Transactions:{transactions}
+            Accuracy:{' '}
+            {transactions > 0
+              ? ((score * 100) / transactions).toLocaleString(undefined, {
+                  maximumFractionDigits: 0,
+                }) + '%'
+              : ''}
           </IonLabel>
         </IonFab>
 

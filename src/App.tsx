@@ -1,7 +1,5 @@
-import { Redirect, Route, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client/react';
-import { IonApp, IonRouterOutlet, isPlatform } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
+import { IonApp, isPlatform } from '@ionic/react';
 import Home from './pages/Home';
 import graphqlClient from './graphql-client';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
@@ -35,18 +33,7 @@ const App: React.FC = () => {
   return (
     <ApolloProvider client={graphqlClient}>
       <IonApp>
-        <IonReactRouter>
-          <IonRouterOutlet>
-            <Switch>
-              <Route exact path="/home">
-                <Home />
-              </Route>
-              <Route exact path="/">
-                <Redirect to="/home" />
-              </Route>
-            </Switch>
-          </IonRouterOutlet>
-        </IonReactRouter>
+        <Home />
       </IonApp>
     </ApolloProvider>
   );
