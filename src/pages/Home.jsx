@@ -233,14 +233,14 @@ const Home = () => {
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
           <IonRow>
             <IonCol>
-              <IonFabButton onClick={() => predict('buy')}>
+              <IonFabButton onClick={() => predict('buy')} color="success">
                 {'▲'}
                 <br />
                 {'Buy'}
               </IonFabButton>
             </IonCol>
             <IonCol>
-              <IonFabButton onClick={() => predict('short')}>
+              <IonFabButton onClick={() => predict('short')} color="danger">
                 {'▼'}
                 <br />
                 {'Short'}
