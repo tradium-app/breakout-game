@@ -251,7 +251,7 @@ const Home = () => {
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={nextGame}>
-            {'►'}
+            {'▶'}
             <br />
             {predicted ? 'Next' : 'Skip'}
           </IonFabButton>
@@ -305,27 +305,6 @@ const computeNewBalance = (
   return action === 'buy'
     ? initialBalance * (1 + percentChange)
     : initialBalance * (1 - percentChange);
-};
-
-const composeResultMessage = (prediction, actual, action) => {
-  let message = '';
-
-  if (prediction === actual) {
-    message += 'Yep! ';
-    if (action === 'buy') {
-      message += 'It went up.';
-    } else {
-      message += 'It went down.';
-    }
-  } else {
-    message += 'Nope! ';
-    if (action === 'buy') {
-      message += 'It went down.';
-    } else {
-      message += 'It went up.';
-    }
-  }
-  return message;
 };
 
 export default Home;
