@@ -251,7 +251,7 @@ const Home = () => {
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={nextGame}>
-            {'▶'}
+            {'►'}
             <br />
             {predicted ? 'Next' : 'Skip'}
           </IonFabButton>
