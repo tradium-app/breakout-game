@@ -20,12 +20,11 @@ jobs:
         with:
           node-version: 14.11.0
 
-      - name: NPM Install, Build, (Test)
+      - name: NPM Install, Build-QA apk, (Test)
         run: |
           sh prepare_qa.sh
           npm ci
           npm run android:build
-          # npm run bundle
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
@@ -42,3 +41,19 @@ jobs:
           automatic_release_tag: 'latest'
           title: 'BreakOut QA - apk'
           prerelease: false
+
+      - name: Build-Prod apk
+        if: startsWith(github.ref, 'refs/heads/release')
+        run: |
+          sh prepare_release.sh
+          npm run android:build
+
+      - name: Publish Android Bundle to Google Play Store
+        if: startsWith(github.ref, 'refs/heads/release')
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON_PLAIN_TEXT }}
+          packageName: com.tradiumapp.breakout
+          releaseFiles: android/app/build/outputs/apk/signed/release/app-signed-release.apk
+          track: production
+          whatsNewDirectory: distribution/whatsnew
