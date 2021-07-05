@@ -9,12 +9,12 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="master-artboard"
-   viewBox="0 0 413.51676 334.24386"
+   viewBox="0 0 425.07444 338.02337"
    version="1.1"
    x="0px"
    y="0px"
-   width="413.51675"
-   height="334.24387"
+   width="425.07443"
+   height="338.02338"
    sodipodi:docname="breakout-logo-2.svg"
    inkscape:version="1.0.1 (c497b03c, 2020-09-10)">
   <metadata
@@ -72,8 +72,8 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.4142136"
-     inkscape:cx="101.94992"
-     inkscape:cy="163.67843"
+     inkscape:cx="109.7281"
+     inkscape:cy="167.45792"
      inkscape:window-x="0"
      inkscape:window-y="23"
      inkscape:window-maximized="1"
@@ -83,11 +83,11 @@
      inkscape:snap-page="true" />
   <g
      id="g869"
-     transform="translate(-302.15031,-454.10325)"
+     transform="translate(-294.37213,-450.32375)"
      inkscape:groupmode="layer"
      style="display:inline">
     <ellipse
-       style="display:inline;mix-blend-mode:darken;fill:#ffffe4;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:15.11811024;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="display:inline;mix-blend-mode:darken;fill:#ffffe4;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:15.1181;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="ellipse897-6"
        cx="508.90869"
        cy="622.20001"
@@ -143,20 +143,32 @@
        inkscape:label="ellipse897" />
     <g
        id="g948"
-       transform="translate(20.087725,-48.599505)"
+       transform="translate(20.087716,-48.599505)"
        style="display:inline">
       <path
          d="m 689.91005,532.37206 a 24,24 0 0 1 -24,24 24,24 0 0 1 -24,-24 24,24 0 0 1 24,-24 24,24 0 0 1 24,24 z"
          class="st2"
-         style="display:inline;fill:#2096f3;fill-opacity:1;stroke:#2096f3;stroke-width:11.3386;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         style="display:inline;fill:#2096f3;fill-opacity:1;stroke:#2096f3;stroke-width:18.8976;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
          id="path839"
          inkscape:label="path839" />
       <path
-         d="M 297.18069,759.64771 430.77867,608.02182 546.90712,679.54216 654.30709,545.92841"
+         d="M 289.40251,769.54721 431.48578,596.00101 546.90712,699.34115 654.30709,545.92841"
          class="st11"
          style="display:inline;fill:none;fill-opacity:1;stroke:#2096f3;stroke-width:30.2362;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
          id="path867"
          sodipodi:nodetypes="cccc" />
+      <path
+         d="m 567.69209,687.37893 a 24,24 0 0 1 -24,24 24,24 0 0 1 -24,-24 24,24 0 0 1 24,-24 24,24 0 0 1 24,24 z"
+         class="st2"
+         style="display:inline;fill:#2096f3;fill-opacity:1;stroke:#2096f3;stroke-width:18.8976;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path839-9"
+         inkscape:label="path839" />
+      <path
+         d="m 459.50476,602.40481 a 24,24 0 0 1 -24,24 24,24 0 0 1 -24,-24 24,24 0 0 1 24,-24 24,24 0 0 1 24,24 z"
+         class="st2"
+         style="display:inline;fill:#2096f3;fill-opacity:1;stroke:#2096f3;stroke-width:18.8976;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path839-9-7"
+         inkscape:label="path839" />
     </g>
   </g>
 </svg>
