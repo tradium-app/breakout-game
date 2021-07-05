@@ -10,7 +10,7 @@ export const useIonicStorage = (key, defaultValue) => {
   useEffect(() => {
     (async function () {
       const stored = await storage.get(key);
-      const initial = stored ? JSON.parse(stored) : defaultValue;
+      const initial = stored != null ? JSON.parse(stored) : defaultValue;
       setValue(initial);
     })();
   }, []);

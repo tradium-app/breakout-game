@@ -20,7 +20,7 @@ import './Home.css';
 import { settingsSharp } from 'ionicons/icons';
 
 import moment from 'moment';
-import { useIonicStorage } from '../common/useIonicStorage';
+import { useIonicStorage } from '../../common/useIonicStorage';
 import {
   toastOptions,
   defaultChartOptions,

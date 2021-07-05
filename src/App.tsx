@@ -6,8 +6,8 @@ import { Route, Switch } from 'react-router-dom';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics';
 import graphqlClient from './graphql-client';
 
-import Home from './pages/Home';
-import Settings from './pages/Settings';
+import Home from './pages/Home/Home';
+import Settings from './pages/Settings/Settings';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';

@@ -16,9 +16,11 @@ import {
   IonRow,
   IonCol,
 } from '@ionic/react';
-import './Home.css';
+import { useIonicStorage } from '../../common/useIonicStorage';
 
 const Settings = () => {
+  const [ema26, setEma26] = useIonicStorage('ema26', 1);
+
   return (
     <IonPage>
       <IonHeader className="ion-no-border" translucent={true}>
@@ -44,7 +46,11 @@ const Settings = () => {
                   <IonList lines="none">
                     <IonItem>
                       <IonLabel>Show EMA 26</IonLabel>
-                      <IonCheckbox slot="start" />
+                      <IonCheckbox
+                        slot="start"
+                        checked={ema26}
+                        onIonChange={e => setEma26(e.detail.checked ? 1 : 0)}
+                      />
                     </IonItem>
                   </IonList>
                 </IonCardContent>
