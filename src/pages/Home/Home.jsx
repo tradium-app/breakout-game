@@ -40,6 +40,7 @@ const Home = () => {
   const [transactions, setTransactions] = useIonicStorage('transactions', 0);
   const [balance, setBalance] = useIonicStorage('balance', 10000);
   const [currentProfit, setCurrentProfit] = useIonicStorage('profit', 0);
+  const [showEma26] = useIonicStorage('ema26', 1);
 
   const [showToast] = useIonToast();
   const [showAlert] = useIonAlert();
@@ -91,11 +92,12 @@ const Home = () => {
         volumeSeries.update(volumeData[index]);
       }
 
-      emaData
-        .filter(ed => ed.time > predictionPoint)
-        .forEach(ed => {
-          emaSeries.update(ed);
-        });
+      showEma26 &&
+        emaData
+          .filter(ed => ed.time > predictionPoint)
+          .forEach(ed => {
+            emaSeries.update(ed);
+          });
     }
   }, [predicted, skipped]);
 
@@ -106,7 +108,8 @@ const Home = () => {
     volumeSeries.setData(
       volumeData.slice(0, data.getNewGame.price_history.length),
     );
-    emaSeries.setData(emaData.filter(ed => ed.time <= predictionPoint));
+    showEma26 &&
+      emaSeries.setData(emaData.filter(ed => ed.time <= predictionPoint));
 
     containerId.current.applyOptions(defaultChartOptions);
     containerId.current.timeScale().fitContent();
