@@ -141,6 +141,12 @@ const Home = () => {
       });
 
       return;
+    } else if (skipped) {
+      showToast({
+        ...toastOptions,
+        message: 'Press Next for new prediction.',
+      });
+      return;
     }
 
     const newBalance = computeNewBalance(
