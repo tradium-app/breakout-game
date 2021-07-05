@@ -14,8 +14,11 @@ import {
   IonAlert,
   useIonAlert,
   useIonToast,
+  IonIcon,
 } from '@ionic/react';
 import './Home.css';
+import { settingsSharp } from 'ionicons/icons';
+
 import moment from 'moment';
 import { useIonicStorage } from '../common/useIonicStorage';
 import {
@@ -232,12 +235,23 @@ const Home = () => {
           slot="fixed"
           className="top-balance"
         >
-          <IonButton onClick={resetBalance} color="warning">
-            <IonLabel>
-              {'Balance: '}
-              {balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}
-            </IonLabel>
-          </IonButton>
+          <IonRow>
+            <IonCol>
+              <IonButton onClick={resetBalance} color="warning">
+                <IonLabel>
+                  {'Balance: '}
+                  {balance.toLocaleString(undefined, {
+                    maximumFractionDigits: 0,
+                  })}
+                </IonLabel>
+              </IonButton>
+            </IonCol>
+            <IonCol>
+              <IonButton routerLink="/settings" color="light">
+                <IonIcon icon={settingsSharp} />
+              </IonButton>
+            </IonCol>
+          </IonRow>
         </IonFab>
 
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
