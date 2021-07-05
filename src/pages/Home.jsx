@@ -46,6 +46,7 @@ const Home = () => {
     notifyOnNetworkStatusChange: true,
   });
   const [predicted, setPredicted] = useState(false);
+  const [skipped, setSkipped] = useState(false);
   const [candleSeries, setCandleSeries] = useState(null);
   const [volumeSeries, setVolumeSeries] = useState(null);
   const [emaSeries, setEmaSeries] = useState(null);
@@ -77,7 +78,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    if (predicted && priceData) {
+    if ((predicted || skipped) && priceData) {
       for (
         let index = data.getNewGame.price_history.length;
         index < priceData.length;
@@ -93,9 +94,9 @@ const Home = () => {
           emaSeries.update(ed);
         });
     }
-  }, [predicted]);
+  }, [predicted, skipped]);
 
-  if (!loading && !error && priceData && !predicted) {
+  if (!loading && !error && priceData && !predicted && !skipped) {
     candleSeries.setData(
       priceData.slice(0, data.getNewGame.price_history.length),
     );
@@ -166,7 +167,12 @@ const Home = () => {
 
   const nextGame = () => {
     setPredicted(false);
+    setSkipped(false);
     refetch();
+  };
+
+  const skipGame = () => {
+    setSkipped(true);
   };
 
   const resetBalance = () => {
@@ -250,10 +256,10 @@ const Home = () => {
         </IonFab>
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton onClick={nextGame}>
+          <IonFabButton onClick={predicted || skipped ? nextGame : skipGame}>
             {'►'}
             <br />
-            {predicted ? 'Next' : 'Skip'}
+            {predicted || skipped ? 'Next' : 'Skip'}
           </IonFabButton>
         </IonFab>
       </IonContent>
