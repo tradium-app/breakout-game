@@ -1,3 +1,5 @@
+export const emaPeriod = 26;
+
 export const toastOptions = {
   position: 'top',
   duration: 1000,
