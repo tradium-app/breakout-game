@@ -1,14 +1,19 @@
 import { IonFab, IonLabel } from '@ionic/react';
 
-const LeftLegend = ({ predicted, symbol, emaPeriod, score, transactions }) => (
+const LeftLegend = ({
+  predicted,
+  symbol,
+  showEma26,
+  emaPeriod,
+  showRSI,
+  rsiPeriod,
+  score,
+  transactions,
+}) => (
   <IonFab horizontal="start" vertical="top" slot="fixed">
     <IonLabel>{predicted && symbol}</IonLabel>
     <br />
-    <IonLabel className="tiny-labels">EMA: {emaPeriod}</IonLabel>
-    <br />
     <IonLabel className="tiny-labels">
-      {'. . . . .'}
-      <br />
       Total Transactions: {transactions}
       <br />
       Accuracy:{' '}
@@ -17,7 +22,18 @@ const LeftLegend = ({ predicted, symbol, emaPeriod, score, transactions }) => (
             maximumFractionDigits: 0,
           }) + '%'
         : ''}
+      <br />
+      {'. . . . .'}
     </IonLabel>
+    <br />
+    {!!showEma26 && (
+      <IonLabel className="tiny-labels">
+        EMA: {emaPeriod}
+        <br />
+      </IonLabel>
+    )}
+
+    {!!showRSI && <IonLabel className="tiny-labels">RSI: {rsiPeriod}</IonLabel>}
   </IonFab>
 );
 

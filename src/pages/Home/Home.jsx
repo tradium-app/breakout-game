@@ -17,6 +17,7 @@ import './Home.css';
 import { useIonicStorage } from '../../common/useIonicStorage';
 import {
   emaPeriod,
+  rsiPeriod,
   toastOptions,
   defaultChartOptions,
   afterPredictionChartOptions,
@@ -237,7 +238,10 @@ const Home = () => {
         <LeftLegend
           predicted={predicted}
           symbol={data?.getNewGame?.symbol}
+          showEma26={showEma26}
           emaPeriod={emaPeriod}
+          showRSI={showRSI}
+          rsiPeriod={rsiPeriod}
           score={score}
           transactions={transactions}
         />
