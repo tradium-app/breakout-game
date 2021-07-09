@@ -55,9 +55,17 @@ export const emaSeriesOptions = {
 export const rsiSeriesOptions = {
   priceScaleId: 'left',
   priceLineVisible: false,
-  lastValueVisible: false,
+  color: 'rgba(235, 43, 75, 0.8)',
+  lastValueVisible: true,
   crosshairMarkerVisible: false,
   lineWidth: 1,
+  lineStyle: 2,
+  autoscaleInfoProvider: () => ({
+    priceRange: {
+      minValue: 0,
+      maxValue: 200,
+    },
+  }),
 };
 
 export const markerOptions = {
