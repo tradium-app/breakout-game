@@ -1,7 +1,7 @@
 import { IonFab, IonLabel } from '@ionic/react';
 
 const LeftLegend = ({
-  predicted,
+  showSymbol,
   symbol,
   showEma26,
   emaPeriod,
@@ -11,7 +11,7 @@ const LeftLegend = ({
   transactions,
 }) => (
   <IonFab horizontal="start" vertical="top" slot="fixed">
-    <IonLabel>{predicted && symbol}</IonLabel>
+    <IonLabel>{showSymbol && symbol}</IonLabel>
     <br />
     <IonLabel className="tiny-labels">
       Total Transactions: {transactions}

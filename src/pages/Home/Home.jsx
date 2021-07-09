@@ -236,7 +236,7 @@ const Home = () => {
         <IonLoading isOpen={loading} message={'Loading game...'} />
 
         <LeftLegend
-          predicted={predicted}
+          showSymbol={predicted || skipped}
           symbol={data?.getNewGame?.symbol}
           showEma26={showEma26}
           emaPeriod={emaPeriod}
