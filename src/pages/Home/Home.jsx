@@ -24,9 +24,9 @@ import {
   volumeSeriesOptions,
   markerOptions,
   emaSeriesOptions,
-} from './configs';
+} from './Utilities/configs';
 import { GET_NEW_GAME_QUERY } from './Home_Query';
-import computeChartData from './computeChartData';
+import computeChartData from './Utilities/computeChartData';
 import LeftLegend from './Components/LeftLegend';
 import TopRightButtons from './Components/TopRightButtons';
 
