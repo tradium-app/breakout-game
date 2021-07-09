@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { ema } from 'technicalindicators';
-import { emaPeriod } from './configs';
+import { ema, rsi } from 'technicalindicators';
+import { emaPeriod, rsiPeriod } from './configs';
 
-const computeChartData = gameData => {
+const computeChartData = (gameData, showEma26, showRSI) => {
   let priceData = [...gameData.price_history, ...gameData.future_price_history];
 
   priceData = priceData
@@ -24,15 +24,27 @@ const computeChartData = gameData => {
     color: d.open > d.close ? 'rgba(255,82,82, 0.2)' : 'rgba(0, 150, 136, 0.2)',
   }));
 
-  const emaInputData = priceData.map(d => d.close);
-  const emaOnClose = ema({ period: emaPeriod, values: emaInputData });
-  const emaData = priceData.slice(emaPeriod).map((d, index) => ({
+  let emaData = [];
+  showEma26 && (emaData = computeSignalData(priceData, emaPeriod, ema));
+
+  let rsiData = [];
+  showRSI && (rsiData = computeSignalData(priceData, rsiPeriod, rsi));
+
+  return { priceData, volumeData, emaData, rsiData };
+};
+
+const computeSignalData = (priceData, period, computeFunction) => {
+  const inputData = priceData.map(d => d.close);
+  const dataOnClose = computeFunction({
+    period: period,
+    values: inputData,
+  });
+
+  return priceData.slice(period).map((d, index) => ({
     time: d.time,
     close: d.close,
-    value: emaOnClose[index],
+    value: dataOnClose[index],
   }));
-
-  return { priceData, volumeData, emaData };
 };
 
 export default computeChartData;

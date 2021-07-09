@@ -24,6 +24,7 @@ import {
   volumeSeriesOptions,
   markerOptions,
   emaSeriesOptions,
+  rsiSeriesOptions,
 } from './Utilities/configs';
 import { GET_NEW_GAME_QUERY } from './Home_Query';
 import computeChartData from './Utilities/computeChartData';
@@ -35,7 +36,8 @@ const Home = () => {
   const [transactions, setTransactions] = useIonicStorage('transactions', 0);
   const [balance, setBalance] = useIonicStorage('balance', 10000);
   const [currentProfit, setCurrentProfit] = useIonicStorage('profit', 0);
-  const [showEma26] = useIonicStorage('ema26', 1);
+  const [showEma26] = useIonicStorage('showEma26', 1);
+  const [showRSI] = useIonicStorage('showRSI', 1);
 
   const [showToast] = useIonToast();
   const [showAlert] = useIonAlert();
@@ -49,6 +51,7 @@ const Home = () => {
   const [candleSeries, setCandleSeries] = useState(null);
   const [volumeSeries, setVolumeSeries] = useState(null);
   const [emaSeries, setEmaSeries] = useState(null);
+  const [rsiSeries, setRsiSeries] = useState(null);
 
   useEffect(() => {
     containerId.current = createChart(containerId.current, {
@@ -66,13 +69,20 @@ const Home = () => {
     const emaSeries = containerId.current.addLineSeries(emaSeriesOptions);
     setEmaSeries(emaSeries);
 
+    const rsiSeries = containerId.current.addLineSeries(rsiSeriesOptions);
+    setRsiSeries(rsiSeries);
+
     containerId.current.timeScale().applyOptions({ rightOffset: 15 });
   }, []);
 
-  let priceData, volumeData, emaData, predictionPoint;
+  let priceData, volumeData, emaData, rsiData, predictionPoint;
 
   if (!loading && !error && data.getNewGame) {
-    ({ priceData, volumeData, emaData } = computeChartData(data.getNewGame));
+    ({ priceData, volumeData, emaData, rsiData } = computeChartData(
+      data.getNewGame,
+      showEma26,
+      showRSI,
+    ));
     predictionPoint = priceData[data.getNewGame.price_history.length].time;
   }
 
@@ -93,6 +103,13 @@ const Home = () => {
           .forEach(ed => {
             emaSeries.update(ed);
           });
+
+      showRSI &&
+        rsiData
+          .filter(ed => ed.time > predictionPoint)
+          .forEach(ed => {
+            rsiSeries.update(ed);
+          });
     }
   }, [predicted, skipped]);
 
@@ -105,6 +122,9 @@ const Home = () => {
     );
     showEma26 &&
       emaSeries.setData(emaData.filter(ed => ed.time <= predictionPoint));
+
+    showRSI &&
+      rsiSeries.setData(rsiData.filter(ed => ed.time <= predictionPoint));
 
     containerId.current.applyOptions(defaultChartOptions);
     containerId.current.timeScale().fitContent();

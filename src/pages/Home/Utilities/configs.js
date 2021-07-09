@@ -1,4 +1,5 @@
 export const emaPeriod = 26;
+export const rsiPeriod = 14;
 
 export const toastOptions = {
   position: 'top',
@@ -49,6 +50,14 @@ export const emaSeriesOptions = {
   crosshairMarkerVisible: false,
   lineWidth: 1,
   lineStyle: 2,
+};
+
+export const rsiSeriesOptions = {
+  priceScaleId: 'left',
+  priceLineVisible: false,
+  lastValueVisible: false,
+  crosshairMarkerVisible: false,
+  lineWidth: 1,
 };
 
 export const markerOptions = {
