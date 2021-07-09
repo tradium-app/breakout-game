@@ -8,16 +8,12 @@ import {
   IonCol,
   IonFab,
   IonFabButton,
-  IonButton,
-  IonLabel,
   IonLoading,
   IonAlert,
   useIonAlert,
   useIonToast,
-  IonIcon,
 } from '@ionic/react';
 import './Home.css';
-import { settingsSharp } from 'ionicons/icons';
 import { useIonicStorage } from '../../common/useIonicStorage';
 import {
   emaPeriod,
@@ -31,6 +27,8 @@ import {
 } from './configs';
 import { GET_NEW_GAME_QUERY } from './Home_Query';
 import computeChartData from './computeChartData';
+import LeftLegend from './Components/LeftLegend';
+import TopRightButtons from './Components/TopRightButtons';
 
 const Home = () => {
   const [score, setScore] = useIonicStorage('score', 0);
@@ -216,49 +214,15 @@ const Home = () => {
 
         <IonLoading isOpen={loading} message={'Loading game...'} />
 
-        <IonFab horizontal="start" vertical="top" slot="fixed">
-          <IonLabel>{predicted && data?.getNewGame?.symbol}</IonLabel>
-          <br />
-          <IonLabel className="tiny-labels">EMA: {emaPeriod}</IonLabel>
-          <br />
-          <IonLabel className="tiny-labels">
-            {'. . . . .'}
-            <br />
-            Total Transactions: {transactions}
-            <br />
-            Accuracy:{' '}
-            {transactions > 0
-              ? ((score * 100) / transactions).toLocaleString(undefined, {
-                  maximumFractionDigits: 0,
-                }) + '%'
-              : ''}
-          </IonLabel>
-        </IonFab>
+        <LeftLegend
+          predicted={predicted}
+          symbol={data?.getNewGame?.symbol}
+          emaPeriod={emaPeriod}
+          score={score}
+          transactions={transactions}
+        />
 
-        <IonFab
-          vertical="top"
-          horizontal="end"
-          slot="fixed"
-          className="top-balance"
-        >
-          <IonRow>
-            <IonCol>
-              <IonButton onClick={resetBalance} color="warning">
-                <IonLabel>
-                  {'Balance: '}
-                  {balance.toLocaleString(undefined, {
-                    maximumFractionDigits: 0,
-                  })}
-                </IonLabel>
-              </IonButton>
-            </IonCol>
-            <IonCol>
-              <IonButton routerLink="/settings" color="light">
-                <IonIcon icon={settingsSharp} />
-              </IonButton>
-            </IonCol>
-          </IonRow>
-        </IonFab>
+        <TopRightButtons balance={balance} resetBalance={resetBalance} />
 
         <IonFab vertical="bottom" horizontal="start" slot="fixed">
           <IonRow>
